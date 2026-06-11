@@ -1,0 +1,13 @@
+# Turkiy Korpus — Python bog'liqliklari (Ubuntu / Linux)
+# O'rnatish:  pip install -r requirements.txt
+# (yoki shunchaki ./run.sh — venv va paketlar avtomatik o'rnatiladi)
+
+Django==4.2.30
+djangorestframework==3.17.1
+djangorestframework-simplejwt==5.5.1
+django-filter==25.1
+django-cors-headers==4.9.0
+Pillow==12.2.0
+
+# PostgreSQL ishlatmoqchi bo'lsangiz (USE_POSTGRES=True), buni yoqing:
+# psycopg2-binary==2.9.10

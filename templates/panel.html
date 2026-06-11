@@ -1,0 +1,569 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel | Turkiy Korpus</title>
+  <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+</head>
+<body>
+
+<!-- ═══════════════════════════ LOGIN PAGE ═══════════════════════════ -->
+<div class="login-page" id="loginPage" style="display:none">
+  <div class="login-box">
+    <span class="login-rune">𐰓</span>
+    <h1 class="login-title">Admin Paneli</h1>
+    <p class="login-sub">Turkiy Yozma Yodgorliklar Korpusi boshqaruv tizimi</p>
+
+    <form class="login-form" id="loginForm">
+      <div>
+        <label class="login-label" for="loginUser">Foydalanuvchi nomi</label>
+        <input type="text" class="login-input" id="loginUser" placeholder="admin" autocomplete="username" required>
+      </div>
+      <div>
+        <label class="login-label" for="loginPass">Parol</label>
+        <input type="password" class="login-input" id="loginPass" placeholder="••••••••" autocomplete="current-password" required>
+      </div>
+      <div class="login-error" id="loginError"></div>
+      <button type="submit" class="login-btn">Kirish →</button>
+    </form>
+
+    <div class="login-hint">
+      <a href="/" style="color:var(--text3)">← Asosiy saytga qaytish</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ ADMIN LAYOUT ═══════════════════════════ -->
+<div class="admin-layout" id="adminLayout" style="display:none">
+
+  <!-- Mobile sidebar overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ─── SIDEBAR ─── -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-rune">𐰓</div>
+      <div class="sidebar-logo-text">
+        <span class="sidebar-logo-name">TURKIY KORPUS</span>
+        <span class="sidebar-logo-sub">Admin Panel</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-lbl">Asosiy</div>
+      <div class="nav-item active" data-page="dashboard">
+        <span class="nav-item-icon">📊</span>
+        Bosh sahifa
+      </div>
+      <div class="nav-item" data-page="monuments">
+        <span class="nav-item-icon">🗿</span>
+        Yodgorliklar
+        <span class="nav-item-badge" id="monumentsBadge">15</span>
+      </div>
+
+      <div class="sidebar-section-lbl" style="margin-top:16px">Tizim</div>
+      <div class="nav-item" data-page="settings">
+        <span class="nav-item-icon">⚙️</span>
+        Sozlamalar
+      </div>
+      <div class="nav-item" onclick="window.open('/','_blank')">
+        <span class="nav-item-icon">🌐</span>
+        Asosiy sayt
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="sidebarAvatar">A</div>
+        <div>
+          <div class="sidebar-username" id="sidebarUsername">Administrator</div>
+          <div class="sidebar-role" id="sidebarRole">Super Admin</div>
+        </div>
+        <button class="sidebar-logout-btn" id="logoutBtn" title="Chiqish">⏻</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ─── MAIN ─── -->
+  <main class="admin-main">
+
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" id="menuToggle">☰</button>
+        <div class="topbar-page-title">Bosh sahifa</div>
+      </div>
+      <div class="topbar-right">
+        <button class="topbar-btn" id="themeToggleBtn" onclick="adminToggleTheme()" title="Tema almashtirish">
+          <span id="themeIcon">🌙</span>
+        </button>
+        <button class="topbar-btn" id="homeBtn">🌐 Saytni ko'rish</button>
+        <button class="topbar-btn" id="exportBtn">📥 Eksport</button>
+        <button class="topbar-btn primary" id="addMonumentBtn">+ Yodgorlik qo'shish</button>
+      </div>
+    </div>
+
+    <div class="page-content">
+
+      <!-- ═══════════ DASHBOARD PAGE ═══════════ -->
+      <div class="page active" id="page-dashboard">
+
+        <!-- KPI Cards -->
+        <div class="kpi-grid">
+          <div class="kpi-card gold">
+            <div class="kpi-header">
+              <div>
+                <div class="kpi-num" id="kpi-total">—</div>
+                <div class="kpi-label">Jami yodgorlik</div>
+              </div>
+              <div class="kpi-icon">🗿</div>
+            </div>
+            <div class="kpi-trend up">↑ Faol to'plam</div>
+          </div>
+          <div class="kpi-card amber">
+            <div class="kpi-header">
+              <div>
+                <div class="kpi-num" id="kpi-words">—</div>
+                <div class="kpi-label">Ming so'z (jami)</div>
+              </div>
+              <div class="kpi-icon">📝</div>
+            </div>
+            <div class="kpi-trend up">↑ Katta hajm</div>
+          </div>
+          <div class="kpi-card green">
+            <div class="kpi-header">
+              <div>
+                <div class="kpi-num" id="kpi-scripts">—</div>
+                <div class="kpi-label">Yozuv tizimlari</div>
+              </div>
+              <div class="kpi-icon">✍️</div>
+            </div>
+            <div class="kpi-trend up">↑ Xilma-xil</div>
+          </div>
+          <div class="kpi-card blue">
+            <div class="kpi-header">
+              <div>
+                <div class="kpi-num" id="kpi-views">—</div>
+                <div class="kpi-label">Jami ko'rishlar</div>
+              </div>
+              <div class="kpi-icon">👁</div>
+            </div>
+            <div class="kpi-trend up">↑ O'sish</div>
+          </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="dashboard-grid">
+          <div class="chart-card">
+            <div class="chart-card-title">
+              Asrlar bo'yicha yodgorliklar
+              <span>Statistika</span>
+            </div>
+            <div class="simple-bar-chart" id="centuryChart">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card-title">
+              Yozuv turi bo'yicha
+              <span>Taqsimot</span>
+            </div>
+            <div id="scriptDonut"></div>
+          </div>
+        </div>
+
+        <!-- Recent / Top Viewed -->
+        <div class="chart-card">
+          <div class="chart-card-title">
+            Eng ko'p ko'rilgan yodgorliklar
+            <button class="topbar-btn" onclick="adminApp.navigate('monuments')" style="font-size:12px;padding:6px 14px">
+              Hammasini ko'rish →
+            </button>
+          </div>
+          <div id="recentTable">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Quick stats -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-top:20px">
+          <div class="chart-card" style="text-align:center">
+            <div style="font-size:36px;margin-bottom:8px">📜</div>
+            <div style="font-size:24px;font-weight:800;font-family:Georgia,serif;color:var(--gold)" id="dash-qolyozma">0</div>
+            <div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:1px">Qo'lyozmalar</div>
+          </div>
+          <div class="chart-card" style="text-align:center">
+            <div style="font-size:36px;margin-bottom:8px">🗿</div>
+            <div style="font-size:24px;font-weight:800;font-family:Georgia,serif;color:var(--amber)" id="dash-tosh">0</div>
+            <div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:1px">Tosh bitiklar</div>
+          </div>
+          <div class="chart-card" style="text-align:center">
+            <div style="font-size:36px;margin-bottom:8px">📚</div>
+            <div style="font-size:24px;font-weight:800;font-family:Georgia,serif;color:var(--green)" id="dash-doston">0</div>
+            <div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:1px">Dostonlar</div>
+          </div>
+          <div class="chart-card" style="text-align:center">
+            <div style="font-size:36px;margin-bottom:8px">📖</div>
+            <div style="font-size:24px;font-weight:800;font-family:Georgia,serif;color:var(--blue)" id="dash-lugat">0</div>
+            <div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:1px">Lug'atlar</div>
+          </div>
+        </div>
+      </div><!-- /dashboard -->
+
+      <!-- ═══════════ MONUMENTS PAGE ═══════════ -->
+      <div class="page" id="page-monuments">
+        <div class="data-table-wrap">
+          <div class="table-toolbar">
+            <input type="text" class="table-search" id="tableSearch" placeholder="Yodgorlik qidirish...">
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <select class="form-select" id="scriptFilter" style="width:auto;font-size:13px;padding:8px 12px"
+                      onchange="document.getElementById('tableSearch').dispatchEvent(new Event('input'))">
+                <option value="">Barcha yozuvlar</option>
+                <option value="runik">Runik</option>
+                <option value="uyghur">Uyg'ur</option>
+                <option value="arab">Arab</option>
+                <option value="sogd">So'g'diy</option>
+              </select>
+              <button class="topbar-btn primary" onclick="openAddForm()">+ Yangi qo'shish</button>
+            </div>
+          </div>
+
+          <div style="overflow-x:auto">
+            <table>
+              <thead>
+                <tr>
+                  <th data-col="id" data-label="ID">ID</th>
+                  <th data-col="title" data-label="Sarlavha">Sarlavha</th>
+                  <th data-col="script" data-label="Yozuv">Yozuv</th>
+                  <th data-col="century" data-label="Asr">Asr</th>
+                  <th data-col="date" data-label="Sana">Sana</th>
+                  <th data-col="importance" data-label="Ahamiyat">Ahamiyat</th>
+                  <th>Amallar</th>
+                </tr>
+              </thead>
+              <tbody id="monumentsTbody">
+                <tr><td colspan="7" style="text-align:center;padding:40px;color:var(--text3)">Yuklanmoqda...</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-pagination" id="tablePagination"></div>
+        </div>
+      </div><!-- /monuments -->
+
+      <!-- ═══════════ SETTINGS PAGE ═══════════ -->
+      <div class="page" id="page-settings">
+        <div class="settings-grid">
+          <div class="settings-card">
+            <div class="settings-card-title">⚙️ Umumiy sozlamalar</div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <div class="settings-row-label">Sayt nomi</div>
+                <div class="settings-row-desc">Brauzer tabida va sarlavhada ko'rinadigan nom</div>
+              </div>
+              <input type="text" class="form-input" value="Turkiy Yozma Yodgorliklar Korpusi" style="width:220px">
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <div class="settings-row-label">Sahifa boshida ko'rinadigan asrlar</div>
+                <div class="settings-row-desc">Hero bo'limidagi matn</div>
+              </div>
+              <input type="text" class="form-input" value="7 – 11" style="width:100px">
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <div class="settings-row-label">Sahifadagi yodgorliklar soni</div>
+                <div class="settings-row-desc">Bir sahifada nechta karta ko'rsatilsin</div>
+              </div>
+              <select class="form-select" style="width:100px">
+                <option>6</option>
+                <option>9</option>
+                <option selected>12</option>
+                <option>15</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <div class="settings-card-title">🎨 Interfeys</div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <div class="settings-row-label">Animatsiyalar</div>
+                <div class="settings-row-desc">Particle animatsiya va scroll effektlari</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <div class="settings-row-label">Ko'rishlar hisobi</div>
+                <div class="settings-row-desc">Har safar ochilganda ko'rishlar sonini oshir</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <div class="settings-row-label">Qidiruv overlay</div>
+                <div class="settings-row-desc">Asosiy saytdagi qidiruv modalini yoqish</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="settings-card full">
+            <div class="settings-card-title">🗄️ Ma'lumotlar boshqaruvi</div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <div class="settings-row-label">Barcha ma'lumotlarni eksport qilish</div>
+                <div class="settings-row-desc">JSON formatda barcha yodgorliklarni yuklab oling</div>
+              </div>
+              <button class="topbar-btn" id="exportDataBtn" onclick="document.getElementById('exportBtn').click()">
+                📥 Eksport
+              </button>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <div class="settings-row-label">Ma'lumotlarni asl holatga qaytarish</div>
+                <div class="settings-row-desc" style="color:var(--red2)">
+                  ⚠️ Barcha o'zgarishlar o'chib ketadi! Standart 15 ta yodgorlik qaytariladi.
+                </div>
+              </div>
+              <button class="topbar-btn danger" id="resetDataBtn">🔄 Tiklash</button>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <div class="settings-row-label">Hozirgi ma'lumotlar hajmi</div>
+                <div class="settings-row-desc">localStorage'da saqlangan ma'lumotlar</div>
+              </div>
+              <span style="color:var(--gold);font-size:13px;font-weight:600" id="storageSize">0 KB</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:20px;display:flex;justify-content:flex-end">
+          <button class="btn-save" id="saveSettingsBtn">💾 Sozlamalarni saqlash</button>
+        </div>
+      </div><!-- /settings -->
+
+    </div><!-- /page-content -->
+  </main>
+</div><!-- /admin-layout -->
+
+<!-- ═══════════════════════════ FORM MODAL ═══════════════════════════ -->
+<div class="form-modal-overlay" id="formModalOverlay">
+  <div class="form-modal">
+    <div class="form-modal-header">
+      <h2 class="form-modal-title" id="formModalTitle">Yangi yodgorlik qo'shish</h2>
+      <button class="form-modal-close" id="closeFormModal">✕</button>
+    </div>
+    <div class="form-modal-body">
+      <form id="monumentForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Sarlavha <span class="form-required">*</span></label>
+            <input type="text" class="form-input" id="f_title" placeholder="Yodgorlik nomi" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Subtitr (kiril)</label>
+            <input type="text" class="form-input" id="f_subtitle" placeholder="Кирилча nomi">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Davr / Era</label>
+            <input type="text" class="form-input" id="f_era" placeholder="Ko'ktürk II xoqonligi">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Sana <span class="form-required">*</span></label>
+            <input type="text" class="form-input" id="f_date" placeholder="732 yoki 716–720">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Asr <span class="form-required">*</span></label>
+            <select class="form-select" id="f_century">
+              <option value="">— Tanlang —</option>
+              <option value="6">6-asr</option>
+              <option value="7">7-asr</option>
+              <option value="8">8-asr</option>
+              <option value="9">9-asr</option>
+              <option value="10">10-asr</option>
+              <option value="11">11-asr</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Yozuv turi <span class="form-required">*</span></label>
+            <select class="form-select" id="f_script">
+              <option value="">— Tanlang —</option>
+              <option value="runik">Ko'hna turkiy runik</option>
+              <option value="uyghur">Eski uyg'ur</option>
+              <option value="arab">Arab yozuvi</option>
+              <option value="sogd">So'g'diy yozuv</option>
+              <option value="brahmi">Brahmi</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Til</label>
+            <input type="text" class="form-input" id="f_language" placeholder="Ko'hna turkiy">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Toifa</label>
+            <select class="form-select" id="f_category">
+              <option value="tosh_bitik">Tosh bitik</option>
+              <option value="qolyozma">Qo'lyozma</option>
+              <option value="doston">Doston</option>
+              <option value="lugat">Lug'at</option>
+              <option value="yozuv">Yozuv</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Joylashuv</label>
+            <input type="text" class="form-input" id="f_location" placeholder="Mo'g'uliston, Orxon vodiysi">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Region</label>
+            <input type="text" class="form-input" id="f_region" placeholder="Markaziy Osiyo">
+          </div>
+          <div class="form-group">
+            <label class="form-label">So'zlar soni</label>
+            <input type="number" class="form-input" id="f_wordCount" placeholder="3420" min="0">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Qatorlar soni</label>
+            <input type="number" class="form-input" id="f_lineCount" placeholder="68" min="0">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Ahamiyat (1-5)</label>
+            <select class="form-select" id="f_importance">
+              <option value="1">⭐ 1 — Past</option>
+              <option value="2">⭐⭐ 2 — O'rta past</option>
+              <option value="3" selected>⭐⭐⭐ 3 — O'rta</option>
+              <option value="4">⭐⭐⭐⭐ 4 — Yuqori</option>
+              <option value="5">⭐⭐⭐⭐⭐ 5 — Yuksak</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Holat (saqlash joyi)</label>
+            <input type="text" class="form-input" id="f_status" placeholder="Mo'g'uliston milliy muzeyi">
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Tavsif <span class="form-required">*</span></label>
+            <textarea class="form-textarea" id="f_description" rows="4" placeholder="Yodgorlik haqida batafsil ma'lumot..."></textarea>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Ahamiyati</label>
+            <textarea class="form-textarea" id="f_significance" rows="2" placeholder="Ilmiy ahamiyati..."></textarea>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Transkriptsiya (asl yozuv)</label>
+            <input type="text" class="form-input" id="f_transcription" placeholder="𐰀𐰉𐰃𐰏...">
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Transliteratsiya</label>
+            <textarea class="form-textarea" id="f_transliteration" rows="3" placeholder="Tengri teg tengride bolmış..."></textarea>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">O'zbek tiliga tarjima</label>
+            <textarea class="form-textarea" id="f_translation" rows="3" placeholder="Osmonday osmonda tug'ilgan..."></textarea>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Tadqiqotchilar (vergul bilan ajrating)</label>
+            <input type="text" class="form-input" id="f_researchers" placeholder="V.V. Radlov, Talat Tekin, H.N. Orkun">
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Bibliografiya (har bir manba yangi qatorda)</label>
+            <textarea class="form-textarea" id="f_bibliography" rows="3" placeholder="Radlov V.V. Die alttürkischen Inschriften...&#10;Tekin T. A Grammar of Orkhon Turkic..."></textarea>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Teglar (vergul bilan ajrating)</label>
+            <input type="text" class="form-input" id="f_tags" placeholder="orxon, runik, ko'ktürk, siyosiy">
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-delete-modal" id="deleteFromFormBtn" style="display:none">🗑 O'chirish</button>
+          <button type="button" class="btn-cancel" id="cancelFormBtn">Bekor qilish</button>
+          <button type="button" class="btn-save" id="saveFormBtn">💾 Saqlash</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ CONFIRM DIALOG ═══════════════════════════ -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-box">
+    <div class="confirm-icon">⚠️</div>
+    <h3 class="confirm-title">Tasdiqlash</h3>
+    <p class="confirm-desc" id="confirmDesc">Bu amalni bajarishni tasdiqlaysizmi?</p>
+    <div class="confirm-btns">
+      <button class="btn-cancel" id="confirmNo">Bekor qilish</button>
+      <button class="btn-delete-modal" id="confirmYes">Ha, tasdiqlaman</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="{% static 'js/data.js' %}"></script>
+<script src="{% static 'js/api.js' %}"></script>
+<script src="{% static 'js/admin.js' %}"></script>
+<script>
+  // Dark mode init — runs before render to prevent flash
+  (function() {
+    const t = localStorage.getItem('admin_theme') || 'light';
+    document.documentElement.setAttribute('data-theme', t);
+    const icon = document.getElementById('themeIcon');
+    if (icon) icon.textContent = t === 'dark' ? '☀️' : '🌙';
+  })();
+
+  function adminToggleTheme() {
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('admin_theme', next);
+    const icon = document.getElementById('themeIcon');
+    if (icon) icon.textContent = next === 'dark' ? '☀️' : '🌙';
+  }
+
+  // Update badge and storage size after load
+  window.addEventListener("load", function() {
+    const all = CorpusDB.getAll();
+    const badge = document.getElementById("monumentsBadge");
+    if (badge) badge.textContent = all.length;
+
+    const storageEl = document.getElementById("storageSize");
+    if (storageEl) {
+      const stored = localStorage.getItem("turkiy_korpus_monuments") || "";
+      const kb = (new Blob([stored]).size / 1024).toFixed(1);
+      storageEl.textContent = kb + " KB";
+    }
+
+    // Quick category stats
+    const stats = CorpusDB.getStats();
+    const catMap = {
+      "dash-qolyozma": stats.byCategory["qolyozma"] || 0,
+      "dash-tosh": stats.byCategory["tosh_bitik"] || 0,
+      "dash-doston": stats.byCategory["doston"] || 0,
+      "dash-lugat": stats.byCategory["lugat"] || 0,
+    };
+    Object.entries(catMap).forEach(([id, v]) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = v;
+    });
+
+    // Expose navigate for dashboard button
+    window.adminApp = { navigate: function(page) {
+      document.querySelector(`.nav-item[data-page="${page}"]`)?.click();
+    }};
+  });
+</script>
+</body>
+</html>

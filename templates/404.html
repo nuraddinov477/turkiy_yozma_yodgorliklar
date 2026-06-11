@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — Sahifa topilmadi | Turkiy Korpus</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    body { display:flex; align-items:center; justify-content:center; min-height:100vh; margin:0; }
+    .err-wrap {
+      text-align:center; max-width:480px; padding:40px 24px;
+    }
+    .err-code {
+      font-size:clamp(80px,20vw,140px); font-weight:900; line-height:1;
+      background:linear-gradient(135deg,#d4a944,#388bfd);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    .err-rune {
+      font-size:48px; margin: 8px 0 24px;
+      opacity:.4;
+    }
+    .err-title { font-size:22px; font-weight:700; color:var(--text); margin-bottom:12px; }
+    .err-desc  { color:var(--text3); font-size:14px; line-height:1.7; margin-bottom:32px; }
+    .err-btns  { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+    .err-btn-primary {
+      background:var(--gold); color:#000; font-weight:700;
+      padding:12px 28px; border-radius:10px; text-decoration:none;
+      font-size:14px; transition:opacity .2s;
+    }
+    .err-btn-primary:hover { opacity:.85; }
+    .err-btn-outline {
+      border:1px solid var(--border2); color:var(--text2);
+      padding:12px 28px; border-radius:10px; text-decoration:none;
+      font-size:14px; transition:background .2s;
+    }
+    .err-btn-outline:hover { background:var(--bg2); }
+  </style>
+</head>
+<body>
+  <div class="err-wrap">
+    <div class="err-code">404</div>
+    <div class="err-rune">𐰉𐰆𐰑𐰣</div>
+    <h1 class="err-title">Sahifa topilmadi</h1>
+    <p class="err-desc">
+      Siz qidirayotgan sahifa mavjud emas yoki ko'chirilgan.<br>
+      Bosh sahifaga qaytib, kerakli ma'lumotni toping.
+    </p>
+    <div class="err-btns">
+      <a href="/" class="err-btn-primary">Bosh sahifaga qaytish</a>
+      <a href="/#yodgorliklar" class="err-btn-outline">Yodgorliklarni ko'rish</a>
+    </div>
+  </div>
+  <script>
+    const saved = localStorage.getItem('turkiy_theme') || localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', saved);
+  </script>
+</body>
+</html>

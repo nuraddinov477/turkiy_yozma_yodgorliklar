@@ -1,0 +1,36 @@
+{
+  "name": "Turkiy Yozma Yodgorliklar Korpusi",
+  "short_name": "Turkiy Korpus",
+  "description": "VII–XI asrlar turkiy yozma yodgorliklarining elektron korpusi",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0c10",
+  "theme_color": "#1c5fb8",
+  "orientation": "portrait-primary",
+  "lang": "uz",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='24' fill='%230d1117'/><text x='96' y='130' text-anchor='middle' font-size='110' fill='%23c9a84c'>𐰓</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='64' fill='%230d1117'/><text x='256' y='340' text-anchor='middle' font-size='300' fill='%23c9a84c'>𐰓</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["education", "reference"],
+  "shortcuts": [
+    {
+      "name": "Yodgorliklar",
+      "url": "/#yodgorliklar",
+      "description": "Barcha yozma yodgorliklar"
+    },
+    {
+      "name": "Statistika",
+      "url": "/#statistika",
+      "description": "Korpus statistikasi"
+    }
+  ]
+}
