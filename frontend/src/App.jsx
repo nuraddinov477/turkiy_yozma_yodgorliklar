@@ -24,7 +24,7 @@ function Layout() {
   }, [theme])
 
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '') || '/app'}>
+    <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '') || '/'}>
       <Navbar />
       <main>
         <Routes>

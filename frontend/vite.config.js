@@ -10,7 +10,8 @@ export default defineConfig({
       '/media': { target: 'http://127.0.0.1:8000', changeOrigin: true },
     },
   },
-  base: '/app/',
+  // Vercel'da '/' (standart). Django ostida (/app/) qurish uchun: VITE_BASE=/app/
+  base: process.env.VITE_BASE || '/',
   build: {
     outDir: 'dist',
     emptyOutDir: true,

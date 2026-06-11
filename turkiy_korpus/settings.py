@@ -13,6 +13,11 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '127.0.0.1 localhost').split()
 
+# Render deploy hostini avtomatik qo'shadi
+_render_host = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if _render_host and _render_host not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(_render_host)
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -32,6 +37,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',          # CORS — birinchi bo'lishi shart
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',     # statik fayllar (production)
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -60,10 +66,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'turkiy_korpus.wsgi.application'
 
-# ── Database — PostgreSQL (SQLite fallback) ───────────────────────────────────
+# ── Database — Render DATABASE_URL > PostgreSQL > SQLite ─────────────────────
+_DATABASE_URL = os.environ.get('DATABASE_URL')
 _USE_POSTGRES = os.environ.get('USE_POSTGRES', 'True') == 'True'
 
-if _USE_POSTGRES:
+if _DATABASE_URL:
+    # Render avtomatik beradigan DATABASE_URL
+    import dj_database_url
+    DATABASES = {
+        'default': dj_database_url.parse(_DATABASE_URL, conn_max_age=600, ssl_require=True)
+    }
+elif _USE_POSTGRES:
     DATABASES = {
         'default': {
             'ENGINE':   'django.db.backends.postgresql',
@@ -106,6 +119,12 @@ if _react_assets.exists():
     STATICFILES_DIRS.append(('react', _react_assets))
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# WhiteNoise — statik fayllarni siqib uzatadi (production, Render)
+STORAGES = {
+    'default': {'BACKEND': 'django.core.files.storage.FileSystemStorage'},
+    'staticfiles': {'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage'},
+}
 
 MEDIA_URL  = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -169,6 +188,8 @@ CORS_ALLOWED_ORIGINS = os.environ.get(
     'http://localhost:5173 http://localhost:3000 http://127.0.0.1:5173'
 ).split()
 CORS_ALLOW_CREDENTIALS = True
+# Vercel preview/production domenlariga ruxsat (*.vercel.app)
+CORS_ALLOWED_ORIGIN_REGEXES = [r'^https://.*\.vercel\.app$']
 
 # ── Security ──────────────────────────────────────────────────────────────────
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -183,6 +204,21 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SAMESITE = 'Lax'
+
+# CSRF — ishonchli domenlar (Render + Vercel), env'dan probel bilan
+CSRF_TRUSTED_ORIGINS = [o for o in os.environ.get('CSRF_TRUSTED_ORIGINS', '').split() if o]
+if _render_host:
+    CSRF_TRUSTED_ORIGINS.append(f'https://{_render_host}')
+
+# ── Production xavfsizlik (faqat DEBUG=False bo'lganda) ───────────────────────
+if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')  # Render reverse-proxy
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
 
 AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
 

@@ -1,6 +1,9 @@
 import axios from 'axios'
 
-const BASE = '/api/v2'
+// Production'da (Vercel) Render API manzili VITE_API_URL orqali beriladi.
+// Lokal dev'da bo'sh qoladi — vite proxy /api'ni 127.0.0.1:8000 ga yo'naltiradi.
+const API_ROOT = import.meta.env.VITE_API_URL || ''
+const BASE = `${API_ROOT}/api/v2`
 
 const api = axios.create({ baseURL: BASE })
 

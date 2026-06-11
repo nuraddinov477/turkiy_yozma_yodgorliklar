@@ -9,5 +9,8 @@ django-filter==25.1
 django-cors-headers==4.9.0
 Pillow==12.2.0
 
-# PostgreSQL ishlatmoqchi bo'lsangiz (USE_POSTGRES=True), buni yoqing:
-# psycopg2-binary==2.9.10
+# ── Production / deploy (Render) ──────────────────────────
+gunicorn==23.0.0
+whitenoise==6.11.0
+psycopg2-binary==2.9.10
+dj-database-url==3.0.1

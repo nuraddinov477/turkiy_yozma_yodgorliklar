@@ -1,0 +1,41 @@
+# Render Blueprint — Django API + PostgreSQL
+# Render dashboard > New > Blueprint > shu repozitoriyni tanlang.
+
+databases:
+  - name: turkiy-korpus-db
+    databaseName: turkiy_korpus
+    user: turkiy_user
+    plan: free
+
+services:
+  - type: web
+    name: turkiy-korpus-api
+    runtime: python
+    plan: free
+    buildCommand: "bash build.sh"
+    startCommand: "gunicorn turkiy_korpus.wsgi:application --bind 0.0.0.0:$PORT"
+    envVars:
+      # Baza — yuqoridagi PostgreSQL'dan avtomatik ulanadi
+      - key: DATABASE_URL
+        fromDatabase:
+          name: turkiy-korpus-db
+          property: connectionString
+      # Maxfiy kalit — Render avtomatik generatsiya qiladi
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: PYTHON_VERSION
+        value: "3.12.7"
+      # Admin — parol avtomatik generatsiya qilinadi (dashboard'dan ko'rasiz)
+      - key: DJANGO_SUPERUSER_USERNAME
+        value: admin
+      - key: DJANGO_SUPERUSER_EMAIL
+        value: admin@korpus.uz
+      - key: DJANGO_SUPERUSER_PASSWORD
+        generateValue: true
+      # Vercel URL'i ma'lum bo'lgach, dashboard'dan to'ldiriladi
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
+      - key: CSRF_TRUSTED_ORIGINS
+        sync: false
