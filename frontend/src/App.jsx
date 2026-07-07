@@ -6,6 +6,7 @@ import Footer from './components/Footer'
 import Home from './pages/Home'
 import Monuments from './pages/Monuments'
 import Timeline from './pages/Timeline'
+import MapView from './pages/MapView'
 import Scripts from './pages/Scripts'
 import Stats from './pages/Stats'
 import Concordance from './pages/Concordance'
@@ -31,6 +32,7 @@ function Layout() {
           <Route path="/" element={<Home />} />
           <Route path="/monuments" element={<Monuments />} />
           <Route path="/timeline" element={<Timeline />} />
+          <Route path="/map" element={<MapView />} />
           <Route path="/scripts" element={<Scripts />} />
           <Route path="/stats" element={<Stats />} />
           <Route path="/concordance" element={<Concordance />} />

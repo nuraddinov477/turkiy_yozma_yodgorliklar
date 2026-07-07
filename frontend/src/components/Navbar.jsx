@@ -11,6 +11,7 @@ export default function Navbar() {
     { to: '/', label: t('nav_home') },
     { to: '/monuments', label: t('nav_monuments') },
     { to: '/timeline', label: t('nav_timeline') },
+    { to: '/map', label: 'Xarita' },
     { to: '/scripts', label: t('nav_scripts') },
     { to: '/stats', label: t('nav_stats') },
     { to: '/concordance', label: t('nav_concordance') },

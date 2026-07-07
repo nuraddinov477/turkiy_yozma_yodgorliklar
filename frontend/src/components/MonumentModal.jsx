@@ -1,12 +1,21 @@
 import { useState, useEffect } from 'react'
 import { monuments as api } from '../api'
 import { useApp } from '../context/AppContext'
+import { buildCitations } from '../utils/citation'
 
 export default function MonumentModal({ monument, onClose }) {
   const { t } = useApp()
   const [detail, setDetail] = useState(null)
   const [tab, setTab] = useState('text')
   const [loading, setLoading] = useState(true)
+  const [copied, setCopied] = useState('')
+
+  const copy = (key, text) => {
+    navigator.clipboard?.writeText(text).then(() => {
+      setCopied(key)
+      setTimeout(() => setCopied(''), 1500)
+    })
+  }
 
   useEffect(() => {
     api.get(monument.id).then(r => {
@@ -23,6 +32,7 @@ export default function MonumentModal({ monument, onClose }) {
     { key: 'translation', label: t('modal_translation') },
     { key: 'info', label: t('modal_info') },
     ...(data.bibliography ? [{ key: 'bibliography', label: t('modal_bibliography') }] : []),
+    { key: 'cite', label: 'Iqtibos' },
   ]
 
   const handleOverlayClick = e => {
@@ -96,6 +106,26 @@ export default function MonumentModal({ monument, onClose }) {
           {!loading && tab === 'bibliography' && (
             <div style={{ lineHeight:1.8, fontSize:'0.9rem', whiteSpace:'pre-wrap' }}>
               {data.bibliography}
+            </div>
+          )}
+
+          {!loading && tab === 'cite' && (
+            <div style={{ display:'flex', flexDirection:'column', gap:'1rem' }}>
+              <p style={{ fontSize:'0.85rem', color:'var(--text2)' }}>
+                Ushbu yodgorlikka ilmiy ishingizda quyidagi formatlarda iqtibos keltiring:
+              </p>
+              {buildCitations(data).map(c => (
+                <div key={c.key} style={{ border:'1px solid var(--border)', borderRadius:'8px', padding:'0.8rem' }}>
+                  <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'0.4rem' }}>
+                    <strong style={{ fontSize:'0.8rem', color:'var(--accent)', letterSpacing:'0.05em' }}>{c.label}</strong>
+                    <button onClick={() => copy(c.key, c.text)} className="btn btn-ghost"
+                      style={{ fontSize:'0.8rem', padding:'0.2rem 0.6rem' }}>
+                      {copied === c.key ? '✓ Nusxa olindi' : '📋 Nusxa olish'}
+                    </button>
+                  </div>
+                  <div style={{ fontSize:'0.88rem', lineHeight:1.6, color:'var(--text)' }}>{c.text}</div>
+                </div>
+              ))}
             </div>
           )}
         </div>

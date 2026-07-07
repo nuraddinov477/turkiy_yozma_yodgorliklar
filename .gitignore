@@ -27,6 +27,8 @@ db.sqlite3-journal
 # ── Node / frontend ──────────────────────
 node_modules/
 frontend/.vite/
+# Build natijasi — Vercel manbadan o'zi quradi, git'da saqlash shart emas
+frontend/dist/
 
 # ── OS / muharrir ────────────────────────
 .DS_Store

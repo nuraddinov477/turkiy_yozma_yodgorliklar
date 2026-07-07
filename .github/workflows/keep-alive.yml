@@ -1,0 +1,27 @@
+name: Keep Render awake
+
+# Render bepul rejasi 15 daqiqa tinch tursa "uxlab qoladi" (keyingi ochilish ~50s sekin).
+# Bu ish har 10 daqiqada API'ga so'rov yuboradi — server doim uyg'oq turadi.
+# Eslatma: GitHub reposi 60 kun tinch tursa, jadval avtomatik o'chadi (har qanday commit qayta yoqadi).
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'   # har 10 daqiqada
+  workflow_dispatch:          # qo'lda ham ishga tushirish mumkin
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping API
+        run: |
+          echo "Ping: $(date -u)"
+          code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 60 \
+            https://turkiy-korpus-api.onrender.com/api/v2/monuments/?limit=1)
+          echo "HTTP $code"
+          # 2xx yoki 3xx bo'lsa muvaffaqiyatli
+          if [ "$code" -ge 200 ] && [ "$code" -lt 400 ]; then
+            echo "✅ Server uyg'oq"
+          else
+            echo "⚠️ Kutilmagan javob: $code"
+          fi
