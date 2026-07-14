@@ -55,6 +55,7 @@ export default function Navbar() {
             <option value="uz">UZ</option>
             <option value="ru">RU</option>
             <option value="en">EN</option>
+            <option value="tr">TR</option>
           </select>
 
           {/* Theme toggle */}
