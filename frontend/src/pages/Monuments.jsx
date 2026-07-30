@@ -104,7 +104,16 @@ export default function Monuments() {
         </div>
 
         {loading && <div className="spinner" />}
-        {error && <div className="error-msg">{error}</div>}
+        {error && (
+          <div className="error-msg">
+            {error}
+            <div style={{ marginTop:'1rem' }}>
+              <button className="btn btn-outline" onClick={() => fetchData(filters, page)}>
+                {t('retry')}
+              </button>
+            </div>
+          </div>
+        )}
 
         {!loading && !error && data.length === 0 && (
           <div style={{ textAlign:'center', padding:'3rem', color:'var(--text2)' }}>

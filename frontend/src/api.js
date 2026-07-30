@@ -34,6 +34,17 @@ api.interceptors.response.use(
         }
       }
     }
+
+    // Render'ning bepul tarifida server uyquda bo'lsa, birinchi so'rov
+    // ulanish xatosi bilan tugaydi — qisqa kutib avtomatik qayta uriniladi.
+    const isNetworkError = !err.response
+    orig._retryCount = orig._retryCount || 0
+    if (isNetworkError && orig._retryCount < 2) {
+      orig._retryCount += 1
+      await new Promise(res => setTimeout(res, 1500 * orig._retryCount))
+      return api(orig)
+    }
+
     return Promise.reject(err)
   }
 )

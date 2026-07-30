@@ -36,6 +36,7 @@ const TRANSLATIONS = {
     no_results: "Natija topilmadi",
     loading: "Yuklanmoqda...",
     error_load: "Ma'lumotlarni yuklashda xatolik",
+    retry: "Qayta urinish",
 
     // Monument card
     card_year: "Yil",
@@ -176,6 +177,7 @@ const TRANSLATIONS = {
     no_results: "Ничего не найдено",
     loading: "Загрузка...",
     error_load: "Ошибка загрузки данных",
+    retry: "Повторить",
 
     card_year: "Год",
     card_script: "Письмо",
@@ -299,6 +301,7 @@ const TRANSLATIONS = {
     no_results: "No results found",
     loading: "Loading...",
     error_load: "Error loading data",
+    retry: "Retry",
 
     card_year: "Year",
     card_script: "Script",
@@ -422,6 +425,7 @@ const TRANSLATIONS = {
     no_results: "Sonuç bulunamadı",
     loading: "Yükleniyor...",
     error_load: "Veriler yüklenirken hata oluştu",
+    retry: "Tekrar dene",
 
     card_year: "Yıl",
     card_script: "Yazı",
