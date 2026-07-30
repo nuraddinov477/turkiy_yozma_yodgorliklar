@@ -12,6 +12,7 @@ const TRANSLATIONS = {
     nav_bibliography: "Bibliografiya",
     nav_glossary: "Lug'at",
     nav_recommended: "Davlat tavsiyasi",
+    nav_frequent: "Ko'p uchraydigan so'zlar",
     nav_submit: "Taklif yuborish",
     nav_about: "Loyiha haqida",
     nav_login: "Kirish",
@@ -131,6 +132,12 @@ const TRANSLATIONS = {
     recommended_desc: "O'zbek tili qoida va me'yorlari asosida shakllantirilgan hamda rasmiy muomalaga kiritilayotgan, chet tillaridan o'zlashgan so'z va atamalarga taklif etilayotgan o'zbekcha muqobillar ro'yxati.",
     recommended_search: "So'z qidirish...",
 
+    // Frequent words
+    frequent_title: "Ko'p uchraydigan so'zlar",
+    frequent_desc: "Korpusdagi yodgorliklar matnlarining transliteratsiyasi bo'yicha aniqlangan eng ko'p qo'llanilgan so'zlar chastotasi.",
+    frequent_search: "So'z qidirish...",
+    frequent_times: "marta",
+
     // Bibliography
     bibliography_title: "Bibliografiya",
 
@@ -155,6 +162,7 @@ const TRANSLATIONS = {
     nav_bibliography: "Библиография",
     nav_glossary: "Словарь",
     nav_recommended: "Рекомендации государства",
+    nav_frequent: "Частые слова",
     nav_submit: "Предложить",
     nav_about: "О проекте",
     nav_login: "Войти",
@@ -259,6 +267,11 @@ const TRANSLATIONS = {
     recommended_desc: "Список узбекских соответствий заимствованным словам и терминам, сформированных на основе норм узбекского языка и вводимых в официальный оборот.",
     recommended_search: "Поиск слова...",
 
+    frequent_title: "Часто встречающиеся слова",
+    frequent_desc: "Частотность слов, определённая по транслитерации текстов памятников корпуса.",
+    frequent_search: "Поиск слова...",
+    frequent_times: "раз",
+
     bibliography_title: "Библиография",
     map_title: "Карта памятников",
 
@@ -279,6 +292,7 @@ const TRANSLATIONS = {
     nav_bibliography: "Bibliography",
     nav_glossary: "Glossary",
     nav_recommended: "State-recommended words",
+    nav_frequent: "Frequent words",
     nav_submit: "Submit",
     nav_about: "About",
     nav_login: "Login",
@@ -383,6 +397,11 @@ const TRANSLATIONS = {
     recommended_desc: "A list of Uzbek equivalents proposed for loanwords and terms, formed according to Uzbek language norms and being introduced into official use.",
     recommended_search: "Search words...",
 
+    frequent_title: "Frequently occurring words",
+    frequent_desc: "Word frequency computed from the transliteration of the corpus monument texts.",
+    frequent_search: "Search words...",
+    frequent_times: "times",
+
     bibliography_title: "Bibliography",
     map_title: "Monuments Map",
 
@@ -403,6 +422,7 @@ const TRANSLATIONS = {
     nav_bibliography: "Kaynakça",
     nav_glossary: "Sözlük",
     nav_recommended: "Devlet Tavsiyesi",
+    nav_frequent: "Sık Kullanılan Kelimeler",
     nav_submit: "Öneri Gönder",
     nav_about: "Proje Hakkında",
     nav_login: "Giriş",
@@ -506,6 +526,11 @@ const TRANSLATIONS = {
     recommended_title: "Devletin Önerdiği Kelimeler",
     recommended_desc: "Özbek dili kurallarına göre oluşturulan ve resmi kullanıma sunulan, yabancı dillerden alınan kelime ve terimlere önerilen Özbekçe karşılıkların listesi.",
     recommended_search: "Kelime ara...",
+
+    frequent_title: "Sık Kullanılan Kelimeler",
+    frequent_desc: "Derlemdeki anıt metinlerinin transliterasyonuna göre belirlenen kelime sıklığı.",
+    frequent_search: "Kelime ara...",
+    frequent_times: "kez",
 
     bibliography_title: "Kaynakça",
     map_title: "Anıtlar Haritası",

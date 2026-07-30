@@ -1,3 +1,6 @@
+import re
+from collections import Counter
+
 from rest_framework import viewsets, permissions, status, filters
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -67,7 +70,7 @@ class MonumentViewSet(viewsets.ModelViewSet):
         return MonumentDetailSerializer
 
     def get_permissions(self):
-        if self.action in ('list', 'retrieve', 'featured', 'stats', 'concordance'):
+        if self.action in ('list', 'retrieve', 'featured', 'stats', 'concordance', 'word_frequency'):
             return [permissions.AllowAny()]
         return [permissions.IsAdminUser()]
 
@@ -138,6 +141,25 @@ class MonumentViewSet(viewsets.ModelViewSet):
                     if len(results) > 200:
                         break
         return Response({'query': q, 'count': len(results), 'results': results[:200]})
+
+    @action(detail=False, methods=['get'], url_path='word-frequency')
+    def word_frequency(self, request):
+        """Korpus matnlarida (transliteratsiya) ko'p uchraydigan so'zlar chastotasi."""
+        word_re = re.compile(r"[^\W\d_]+(?:['’ʼʻ][^\W\d_]+)*", re.UNICODE)
+        counter = Counter()
+        qs = Monument.objects.filter(status='Chop etilgan').exclude(transliteration='')
+        for text in qs.values_list('transliteration', flat=True):
+            for word in word_re.findall(text or ''):
+                word = word.lower()
+                if len(word) >= 3:
+                    counter[word] += 1
+
+        limit = min(int(request.query_params.get('limit', 100)), 300)
+        top = counter.most_common(limit)
+        return Response({
+            'count': len(top),
+            'results': [{'word': w, 'count': c} for w, c in top],
+        })
 
 
 # ── MonumentSubmission API ────────────────────────────────────────────────────

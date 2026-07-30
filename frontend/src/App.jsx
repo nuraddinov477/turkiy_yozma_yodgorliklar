@@ -14,6 +14,7 @@ import Compare from './pages/Compare'
 import Bibliography from './pages/Bibliography'
 import Glossary from './pages/Glossary'
 import RecommendedWords from './pages/RecommendedWords'
+import FrequentWords from './pages/FrequentWords'
 import Submit from './pages/Submit'
 import About from './pages/About'
 import Login from './pages/Login'
@@ -41,6 +42,7 @@ function Layout() {
           <Route path="/bibliography" element={<Bibliography />} />
           <Route path="/glossary" element={<Glossary />} />
           <Route path="/recommended-words" element={<RecommendedWords />} />
+          <Route path="/frequent-words" element={<FrequentWords />} />
           <Route path="/submit" element={<Submit />} />
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />

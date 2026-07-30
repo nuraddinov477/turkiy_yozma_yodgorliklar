@@ -16,6 +16,7 @@ export default function Navbar() {
     { to: '/stats', label: t('nav_stats') },
     { to: '/concordance', label: t('nav_concordance') },
     { to: '/recommended-words', label: t('nav_recommended') },
+    { to: '/frequent-words', label: t('nav_frequent') },
     { to: '/submit', label: t('nav_submit') },
     { to: '/about', label: t('nav_about') },
   ]

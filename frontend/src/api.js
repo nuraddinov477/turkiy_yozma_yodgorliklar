@@ -57,6 +57,7 @@ export const monuments = {
   featured: () => api.get('/monuments/featured/'),
   stats: () => api.get('/monuments/stats/'),
   concordance: q => api.get('/monuments/concordance/', { params: { q } }),
+  wordFrequency: limit => api.get('/monuments/word-frequency/', { params: { limit } }),
 }
 
 export const auth = {
