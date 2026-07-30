@@ -137,6 +137,7 @@ const TRANSLATIONS = {
     frequent_desc: "Korpusdagi yodgorliklar matnlarining transliteratsiyasi bo'yicha aniqlangan eng ko'p qo'llanilgan so'zlar chastotasi.",
     frequent_search: "So'z qidirish...",
     frequent_times: "marta",
+    frequent_tr_label: "Turkcha muqobili",
 
     // Bibliography
     bibliography_title: "Bibliografiya",
@@ -271,6 +272,7 @@ const TRANSLATIONS = {
     frequent_desc: "Частотность слов, определённая по транслитерации текстов памятников корпуса.",
     frequent_search: "Поиск слова...",
     frequent_times: "раз",
+    frequent_tr_label: "Турецкий эквивалент",
 
     bibliography_title: "Библиография",
     map_title: "Карта памятников",
@@ -401,6 +403,7 @@ const TRANSLATIONS = {
     frequent_desc: "Word frequency computed from the transliteration of the corpus monument texts.",
     frequent_search: "Search words...",
     frequent_times: "times",
+    frequent_tr_label: "Turkish equivalent",
 
     bibliography_title: "Bibliography",
     map_title: "Monuments Map",
@@ -531,6 +534,7 @@ const TRANSLATIONS = {
     frequent_desc: "Derlemdeki anıt metinlerinin transliterasyonuna göre belirlenen kelime sıklığı.",
     frequent_search: "Kelime ara...",
     frequent_times: "kez",
+    frequent_tr_label: "Türkçe karşılığı",
 
     bibliography_title: "Kaynakça",
     map_title: "Anıtlar Haritası",

@@ -18,6 +18,7 @@ from .serializers import (
     MonumentListSerializer, MonumentDetailSerializer,
     MonumentSubmissionSerializer, SiteSettingsSerializer,
 )
+from .word_tr import WORD_TR
 
 
 # ── Filters ───────────────────────────────────────────────────────────────────
@@ -158,7 +159,7 @@ class MonumentViewSet(viewsets.ModelViewSet):
         top = counter.most_common(limit)
         return Response({
             'count': len(top),
-            'results': [{'word': w, 'count': c} for w, c in top],
+            'results': [{'word': w, 'count': c, 'tr': WORD_TR.get(w)} for w, c in top],
         })
 
 
