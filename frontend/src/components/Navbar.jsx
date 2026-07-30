@@ -27,25 +27,10 @@ export default function Navbar() {
       top: 0,
       zIndex: 100,
     }}>
-      <div className="container" style={{ display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', minHeight:'56px', padding:'0.6rem 1rem', rowGap:'0.4rem' }}>
+      <div className="container" style={{ display:'flex', alignItems:'center', justifyContent:'space-between', minHeight:'52px', padding:'0.55rem 1rem' }}>
         <Link to="/" style={{ fontWeight:700, fontSize:'1rem', color:'var(--accent)', letterSpacing:'0.02em' }}>
           𐰴 Turkiy Korpus
         </Link>
-
-        {/* Desktop links */}
-        <div style={{ display:'flex', gap:'0.25rem', flexWrap:'wrap', flex:1, justifyContent:'center' }}
-             className="nav-links-desktop">
-          {links.map(l => (
-            <Link key={l.to} to={l.to}
-              className={`nav-link${loc.pathname === l.to ? ' active' : ''}`}
-              style={{
-                color: loc.pathname === l.to ? 'var(--accent)' : 'var(--text2)',
-                background: loc.pathname === l.to ? 'rgba(var(--accent-rgb),0.1)' : 'transparent',
-              }}>
-              {l.label}
-            </Link>
-          ))}
-        </div>
 
         <div style={{ display:'flex', alignItems:'center', gap:'0.5rem' }}>
           {/* Language switcher */}
@@ -80,6 +65,22 @@ export default function Navbar() {
             {open ? '✕' : '☰'}
           </button>
         </div>
+      </div>
+
+      {/* Desktop links — logotip qatoridan pastda, alohida qator */}
+      <div className="container nav-links-desktop"
+           style={{ display:'flex', gap:'0.25rem', flexWrap:'wrap', justifyContent:'center',
+                     padding:'0.5rem 1rem 0.6rem', borderTop:'1px solid var(--border)' }}>
+        {links.map(l => (
+          <Link key={l.to} to={l.to}
+            className={`nav-link${loc.pathname === l.to ? ' active' : ''}`}
+            style={{
+              color: loc.pathname === l.to ? 'var(--accent)' : 'var(--text2)',
+              background: loc.pathname === l.to ? 'rgba(var(--accent-rgb),0.1)' : 'transparent',
+            }}>
+            {l.label}
+          </Link>
+        ))}
       </div>
 
       {/* Mobile menu */}
