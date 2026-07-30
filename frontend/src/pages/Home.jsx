@@ -65,28 +65,6 @@ export default function Home() {
         </section>
       )}
 
-      {/* Quick nav */}
-      <section className="container" style={{ padding:'4rem 1rem' }}>
-        <div className="grid grid-3" style={{ gridTemplateColumns:'repeat(auto-fit,minmax(180px,1fr))' }}>
-          {[
-            { to:'/timeline', icon:'📅', label:t('nav_timeline') },
-            { to:'/scripts', icon:'✍️', label:t('nav_scripts') },
-            { to:'/stats', icon:'📊', label:t('nav_stats') },
-            { to:'/concordance', icon:'🔍', label:t('nav_concordance') },
-            { to:'/compare', icon:'⚖️', label:t('nav_compare') },
-            { to:'/bibliography', icon:'📚', label:t('nav_bibliography') },
-          ].map(({ to, icon, label }) => (
-            <Link key={to} to={to} className="card" style={{
-              display:'flex', flexDirection:'column', alignItems:'center',
-              gap:'0.75rem', textAlign:'center', color:'var(--text)',
-            }}>
-              <span className="icon-chip">{icon}</span>
-              <span style={{ fontWeight:500, fontSize:'0.9rem' }}>{label}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
       {/* Featured monuments */}
       {featured.length > 0 && (
         <section className="container" style={{ paddingBottom:'3rem', paddingLeft:'1rem', paddingRight:'1rem' }}>
