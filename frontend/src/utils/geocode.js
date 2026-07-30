@@ -10,6 +10,7 @@ const PLACES = [
   { key: 'nalayh',    coord: [47.72, 107.48] }, // Tonyuquq
   { key: 'turfon',    coord: [42.95, 89.18] },  // Turfon (Xuastuanift, Altun Yoruq)
   { key: 'dunhuang',  coord: [40.14, 94.66] },  // Irq Bitig
+  { key: 'dunxuang',  coord: [40.14, 94.66] },  // Irq Bitig (o'zbekcha imlo)
   { key: 'iroq',      coord: [33.31, 44.36] },  // Bog'dod — Devonu Lug'atit Turk
   { key: 'koshg',     coord: [39.47, 75.99] },  // Koshg'ar — Qutadg'u Bilig
   { key: 'talas',     coord: [42.52, 72.24] },  // Talas bitiklari

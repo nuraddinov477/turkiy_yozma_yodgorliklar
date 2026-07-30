@@ -11,6 +11,7 @@ const TRANSLATIONS = {
     nav_compare: "Taqqoslash",
     nav_bibliography: "Bibliografiya",
     nav_glossary: "Lug'at",
+    nav_recommended: "Davlat tavsiyasi",
     nav_submit: "Taklif yuborish",
     nav_about: "Loyiha haqida",
     nav_login: "Kirish",
@@ -124,6 +125,11 @@ const TRANSLATIONS = {
     glossary_title: "Lug'at",
     glossary_search: "Lug'atda qidirish...",
 
+    // Recommended words
+    recommended_title: "Davlat tavsiya etgan so'zlar",
+    recommended_desc: "O'zbek tili qoida va me'yorlari asosida shakllantirilgan hamda rasmiy muomalaga kiritilayotgan, chet tillaridan o'zlashgan so'z va atamalarga taklif etilayotgan o'zbekcha muqobillar ro'yxati.",
+    recommended_search: "So'z qidirish...",
+
     // Bibliography
     bibliography_title: "Bibliografiya",
 
@@ -147,6 +153,7 @@ const TRANSLATIONS = {
     nav_compare: "Сравнение",
     nav_bibliography: "Библиография",
     nav_glossary: "Словарь",
+    nav_recommended: "Рекомендации государства",
     nav_submit: "Предложить",
     nav_about: "О проекте",
     nav_login: "Войти",
@@ -245,6 +252,11 @@ const TRANSLATIONS = {
 
     glossary_title: "Словарь",
     glossary_search: "Поиск в словаре...",
+
+    recommended_title: "Слова, рекомендованные государством",
+    recommended_desc: "Список узбекских соответствий заимствованным словам и терминам, сформированных на основе норм узбекского языка и вводимых в официальный оборот.",
+    recommended_search: "Поиск слова...",
+
     bibliography_title: "Библиография",
     map_title: "Карта памятников",
 
@@ -264,6 +276,7 @@ const TRANSLATIONS = {
     nav_compare: "Compare",
     nav_bibliography: "Bibliography",
     nav_glossary: "Glossary",
+    nav_recommended: "State-recommended words",
     nav_submit: "Submit",
     nav_about: "About",
     nav_login: "Login",
@@ -362,6 +375,11 @@ const TRANSLATIONS = {
 
     glossary_title: "Glossary",
     glossary_search: "Search glossary...",
+
+    recommended_title: "State-recommended words",
+    recommended_desc: "A list of Uzbek equivalents proposed for loanwords and terms, formed according to Uzbek language norms and being introduced into official use.",
+    recommended_search: "Search words...",
+
     bibliography_title: "Bibliography",
     map_title: "Monuments Map",
 
@@ -381,6 +399,7 @@ const TRANSLATIONS = {
     nav_compare: "Karşılaştırma",
     nav_bibliography: "Kaynakça",
     nav_glossary: "Sözlük",
+    nav_recommended: "Devlet Tavsiyesi",
     nav_submit: "Öneri Gönder",
     nav_about: "Proje Hakkında",
     nav_login: "Giriş",
@@ -479,6 +498,11 @@ const TRANSLATIONS = {
 
     glossary_title: "Sözlük",
     glossary_search: "Sözlükte ara...",
+
+    recommended_title: "Devletin Önerdiği Kelimeler",
+    recommended_desc: "Özbek dili kurallarına göre oluşturulan ve resmi kullanıma sunulan, yabancı dillerden alınan kelime ve terimlere önerilen Özbekçe karşılıkların listesi.",
+    recommended_search: "Kelime ara...",
+
     bibliography_title: "Kaynakça",
     map_title: "Anıtlar Haritası",
 

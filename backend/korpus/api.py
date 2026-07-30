@@ -41,6 +41,10 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         data = super().validate(attrs)
         data['username'] = self.user.username
         data['is_staff']  = self.user.is_staff
+        # Sayt orqali muvaffaqiyatli kirishni tarixga yozish
+        # (muvaffaqiyatsizlari user_login_failed signali orqali o'zi yoziladi)
+        from .signals import record
+        record(self.context.get('request'), 'login', user=self.user)
         return data
 
 class CustomTokenObtainPairView(TokenObtainPairView):

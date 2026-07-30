@@ -1,42 +1,105 @@
+/* Monumental yozuv shrifti (o'yma toshbitiglar hissi) — faqat shu fayl orqali yuklanadi */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&display=swap');
+
 :root {
-  --accent: #c9a84c;
-  --accent2: #e8c97a;
-  --radius: 8px;
-  --transition: 0.2s ease;
+  /* ── Antik oltin palitrasi (qo'lyozma zarhali) ─────────────────── */
+  --accent: #c9a84c;          /* antik oltin */
+  --accent2: #e8c97a;         /* yorug' oltin */
+  --accent3: #9a7b2f;         /* to'q bronza-oltin */
+  --accent-rgb: 201, 168, 76;
+  --accent-grad: linear-gradient(120deg, #e8c97a 0%, #c9a84c 45%, #a9852f 100%);
+
+  --radius: 12px;
+  --radius-lg: 18px;
+  --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  /* Toshbitig / o'yma yozuv uslubidagi monumental sarlavhalar uchun */
+  --font-inscription: 'Cinzel', 'Playfair Display', Georgia, serif;
+
+  /* Turkiy geometrik naqsh (Saljuqiy sakkiz burchakli yulduz) va qog'oz doni */
+  --pattern-star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23c9a84c' stroke-width='1'%3E%3Crect x='16' y='16' width='32' height='32'/%3E%3Crect x='16' y='16' width='32' height='32' transform='rotate(45 32 32)'/%3E%3Ccircle cx='32' cy='32' r='2.5'/%3E%3C/g%3E%3C/svg%3E");
+  --texture-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 [data-theme="dark"] {
-  --bg: #0d0d0d;
-  --bg2: #1a1a1a;
-  --bg3: #252525;
-  --text: #e8e0d0;
-  --text2: #a89880;
-  --border: #333;
-  --shadow: 0 4px 20px rgba(0,0,0,0.5);
+  /* Qadimiy siyoh va teri muqova ohanglari */
+  --bg: #0e0b06;
+  --bg2: #17110a;
+  --bg3: #221a0f;
+  --text: #ede2ca;
+  --text2: #ab997b;
+  --border: #2c2213;
+  --border-strong: #473721;
+  --shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 18px 48px rgba(0, 0, 0, 0.62);
+  --glow: 0 0 42px rgba(var(--accent-rgb), 0.15);
+  --nav-bg: rgba(20, 15, 8, 0.82);
+  --grain-opacity: 0.035;
 }
 
 [data-theme="light"] {
-  --bg: #f8f6f0;
-  --bg2: #ffffff;
-  --bg3: #f0ede4;
-  --text: #1a1008;
-  --text2: #6b5c40;
-  --border: #ddd;
-  --shadow: 0 4px 20px rgba(0,0,0,0.1);
+  /* Eski pergament / qog'oz ohanglari */
+  --bg: #f3ead4;
+  --bg2: #fbf5e6;
+  --bg3: #ece0c4;
+  --text: #2a1e0d;
+  --text2: #6d5c3c;
+  --border: #ddceac;
+  --border-strong: #c4b183;
+  --shadow: 0 2px 16px rgba(90, 70, 30, 0.10);
+  --shadow-lg: 0 16px 42px rgba(90, 70, 30, 0.18);
+  --glow: 0 0 42px rgba(var(--accent-rgb), 0.20);
+  --nav-bg: rgba(251, 245, 230, 0.85);
+  --grain-opacity: 0.05;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+html { scroll-behavior: smooth; }
+
 body {
-  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--font-body);
   background: var(--bg);
   color: var(--text);
-  line-height: 1.6;
+  line-height: 1.7;
   transition: background var(--transition), color var(--transition);
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-a { color: var(--accent); text-decoration: none; }
+/* Nozik pergament doni — butun sahifa bo'ylab (kontent tagida) */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: var(--texture-grain);
+  background-size: 140px 140px;
+  opacity: var(--grain-opacity);
+}
+
+::selection { background: rgba(var(--accent-rgb), 0.32); color: inherit; }
+
+/* Scrollbar — oltin */
+::-webkit-scrollbar { width: 11px; height: 11px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 100px;
+  border: 3px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--accent3); }
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.01em;
+}
+
+a { color: var(--accent); text-decoration: none; transition: color var(--transition); }
 a:hover { color: var(--accent2); }
 
 button {
@@ -53,47 +116,86 @@ input, select, textarea {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 0.5rem 0.75rem;
+  transition: border-color var(--transition), box-shadow var(--transition);
 }
+
+input:hover, select:hover, textarea:hover { border-color: var(--border-strong); }
 
 input:focus, select:focus, textarea:focus {
-  outline: 2px solid var(--accent);
-  outline-offset: 1px;
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.22);
 }
 
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ── Tugmalar ──────────────────────────────────────────────────── */
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.4rem;
-  padding: 0.5rem 1.2rem;
-  border-radius: var(--radius);
+  padding: 0.55rem 1.4rem;
+  border-radius: 100px;
   font-size: 0.9rem;
   font-weight: 500;
+  letter-spacing: 0.02em;
   transition: all var(--transition);
   min-height: 40px;
 }
 
 .btn-primary {
-  background: var(--accent);
-  color: #0d0d0d;
+  background: var(--accent-grad);
+  color: #1c1406;              /* to'q siyoh — oltin ustida o'qiladigan */
+  font-weight: 700;
+  box-shadow: 0 2px 12px rgba(var(--accent-rgb), 0.35),
+              inset 0 1px 0 rgba(255, 246, 224, 0.45);
 }
-.btn-primary:hover { background: var(--accent2); }
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 26px rgba(var(--accent-rgb), 0.5),
+              inset 0 1px 0 rgba(255, 246, 224, 0.55);
+  filter: brightness(1.05);
+}
+.btn-primary:active { transform: translateY(0); }
 
 .btn-outline {
   border: 1px solid var(--accent);
   color: var(--accent);
 }
-.btn-outline:hover { background: var(--accent); color: #0d0d0d; }
+.btn-outline:hover {
+  background: var(--accent-grad);
+  color: #1c1406;
+  border-color: transparent;
+  box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.38);
+  transform: translateY(-2px);
+}
+.btn-outline:active { transform: translateY(0); }
 
 .btn-ghost { color: var(--text2); }
-.btn-ghost:hover { color: var(--text); }
+.btn-ghost:hover { color: var(--accent); }
 
+/* ── Kartalar ──────────────────────────────────────────────────── */
 .card {
+  position: relative;
   background: var(--bg2);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.25rem;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
   box-shadow: var(--shadow);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
+
+a.card:hover, .card-click:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-lg), var(--glow),
+              inset 0 0 0 1px rgba(var(--accent-rgb), 0.28);
+}
+
+.card-click { cursor: pointer; }
+.card-click img { transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+.card-click:hover img { transform: scale(1.06); }
 
 .container {
   max-width: 1200px;
@@ -102,24 +204,67 @@ input:focus, select:focus, textarea:focus {
 }
 
 .page { padding: 2rem 0; min-height: 80vh; }
-.page-title { font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--accent); }
 
-.grid { display: grid; gap: 1rem; }
+/* ── Sahifa sarlavhasi — toshbitig uslubida, oltin bezakli chiziq ── */
+.page-title {
+  font-family: var(--font-inscription);
+  font-size: 1.95rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  margin-bottom: 1.9rem;
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  padding-bottom: 0.75rem;
+}
+.page-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 58px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--accent-grad);
+}
+/* Chiziq oxiridagi rombsimon bezak (turkiy naqsh ohangi) */
+.page-title::before {
+  content: '';
+  position: absolute;
+  left: 68px;
+  bottom: -1.5px;
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  -webkit-text-fill-color: initial;
+  box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.6);
+}
+
+.grid { display: grid; gap: 1.35rem; }
 .grid-2 { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
 .grid-3 { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
 
 .badge {
   display: inline-block;
-  padding: 0.2rem 0.6rem;
+  padding: 0.22rem 0.65rem;
   border-radius: 100px;
   font-size: 0.75rem;
   font-weight: 600;
+  letter-spacing: 0.02em;
   background: var(--bg3);
   color: var(--text2);
   border: 1px solid var(--border);
+  transition: border-color var(--transition), color var(--transition);
 }
 
-.badge-accent { background: rgba(201,168,76,0.15); color: var(--accent); border-color: var(--accent); }
+.badge-accent {
+  background: rgba(var(--accent-rgb), 0.14);
+  color: var(--accent);
+  border-color: rgba(var(--accent-rgb), 0.5);
+}
 
 .spinner {
   width: 40px; height: 40px;
@@ -133,35 +278,261 @@ input:focus, select:focus, textarea:focus {
 
 .error-msg {
   text-align: center;
-  color: #e57373;
+  color: #e0736a;
   padding: 2rem;
 }
 
-/* Modal */
+/* Kirish animatsiyasi */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.7s cubic-bezier(0.25, 0.6, 0.3, 1) both; }
+.fade-up-1 { animation-delay: 0.08s; }
+.fade-up-2 { animation-delay: 0.18s; }
+.fade-up-3 { animation-delay: 0.28s; }
+.fade-up-4 { animation-delay: 0.38s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up { animation: none; }
+  .hero-runic-title { animation: none !important; }
+  html { scroll-behavior: auto; }
+}
+
+/* ── Navbar ────────────────────────────────────────────────────── */
+.navbar-blur {
+  position: relative;
+  background: var(--nav-bg);
+  -webkit-backdrop-filter: blur(14px) saturate(1.5);
+  backdrop-filter: blur(14px) saturate(1.5);
+}
+/* Pastdagi nozik oltin chiziq */
+.navbar-blur::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 4%, rgba(var(--accent-rgb), 0.55) 50%, transparent 96%);
+  pointer-events: none;
+}
+
+.nav-link {
+  position: relative;
+  padding: 0.4rem 0.65rem;
+  font-size: 0.82rem;
+  border-radius: var(--radius);
+  transition: color var(--transition), background var(--transition);
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0.65rem;
+  right: 0.65rem;
+  bottom: 0.1rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent-grad);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform var(--transition);
+}
+.nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
+
+/* ── Hero — qadimiy naqsh, toshbitig hissi ─────────────────────── */
+.hero {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+  background:
+    radial-gradient(ellipse 60% 55% at 50% -10%, rgba(var(--accent-rgb), 0.14), transparent 70%),
+    radial-gradient(ellipse 45% 40% at 85% 110%, rgba(var(--accent-rgb), 0.08), transparent 70%),
+    linear-gradient(180deg, var(--bg2) 0%, var(--bg) 100%);
+}
+/* Turkiy geometrik yulduz naqshi + diagonal to'qima */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    var(--pattern-star),
+    repeating-linear-gradient(45deg, transparent 0 44px, rgba(var(--accent-rgb), 0.028) 44px 45px);
+  background-size: 64px 64px, auto;
+  opacity: 0.55;
+  -webkit-mask-image: radial-gradient(ellipse 75% 75% at 50% 40%, #000 55%, transparent 100%);
+  mask-image: radial-gradient(ellipse 75% 75% at 50% 40%, #000 55%, transparent 100%);
+  pointer-events: none;
+}
+
+.hero-rune {
+  position: absolute;
+  font-size: 11rem;
+  line-height: 1;
+  color: var(--accent);
+  opacity: 0.06;
+  filter: drop-shadow(0 0 30px rgba(var(--accent-rgb), 0.3));
+  user-select: none;
+  pointer-events: none;
+}
+
+.hero-runic-title {
+  font-family: var(--font-inscription);
+  font-size: 3.2rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin-bottom: 1rem;
+  background: linear-gradient(120deg, #e8c97a 0%, #c9a84c 30%, #f0dca0 50%, #c9a84c 70%, #a9852f 100%);
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 26px rgba(var(--accent-rgb), 0.4));
+  animation: goldShimmer 7s linear infinite;
+}
+@keyframes goldShimmer {
+  to { background-position: 220% center; }
+}
+
+.hero-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  margin: 1.4rem auto;
+  color: var(--accent);
+  opacity: 0.8;
+  text-shadow: 0 0 16px rgba(var(--accent-rgb), 0.5);
+}
+.hero-divider::before, .hero-divider::after {
+  content: '';
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent));
+}
+.hero-divider::after { background: linear-gradient(90deg, var(--accent), transparent); }
+
+/* Ikonka doirachasi (tezkor menyu kartalari) */
+.icon-chip {
+  width: 58px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1.65rem;
+  background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.18), rgba(var(--accent-rgb), 0.04));
+  border: 1px solid rgba(var(--accent-rgb), 0.32);
+  box-shadow: inset 0 0 14px rgba(var(--accent-rgb), 0.12);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+a.card:hover .icon-chip {
+  transform: scale(1.12) rotate(-5deg);
+  box-shadow: var(--glow), inset 0 0 16px rgba(var(--accent-rgb), 0.2);
+}
+
+/* Rasmsiz yodgorlik kartasi uchun runik bezak */
+.rune-placeholder {
+  height: 110px;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: var(--accent);
+  background:
+    var(--pattern-star),
+    radial-gradient(circle at 28% 30%, rgba(var(--accent-rgb), 0.16), transparent 65%),
+    linear-gradient(135deg, var(--bg3), var(--bg2));
+  background-size: 64px 64px, auto, auto;
+  border: 1px solid var(--border);
+  text-shadow: 0 0 26px rgba(var(--accent-rgb), 0.45);
+  user-select: none;
+}
+
+/* Statistika raqami */
+.stat-number {
+  font-family: var(--font-inscription);
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ── Footer — oltin bezak chizig'i va turkiy naqsh ─────────────── */
+.site-footer {
+  position: relative;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  margin-top: 3rem;
+  padding: 2.5rem 0 2rem;
+  overflow: hidden;
+}
+.site-footer::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 5%, var(--accent) 50%, transparent 95%);
+  opacity: 0.6;
+}
+/* Nozik geometrik naqsh footer foni */
+.site-footer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--pattern-star);
+  background-size: 64px 64px;
+  opacity: 0.04;
+  pointer-events: none;
+}
+.site-footer > * { position: relative; z-index: 1; }
+.site-footer a:not(:hover) { color: var(--text2); }
+
+/* ── Jadval ────────────────────────────────────────────────────── */
+table { border-collapse: collapse; width: 100%; }
+th, td { padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border); text-align: left; }
+th {
+  color: var(--accent);
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+tbody tr { transition: background var(--transition); }
+tbody tr:hover { background: var(--bg3); }
+
+/* ── Modal ─────────────────────────────────────────────────────── */
 .modal-overlay {
   position: fixed; inset: 0;
-  background: rgba(0,0,0,0.7);
+  background: rgba(10, 7, 3, 0.62);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  animation: fadeIn 0.15s ease;
+  animation: fadeIn 0.18s ease;
 }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 .modal {
   background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 20px;
   max-width: 900px;
   width: 100%;
   max-height: 90vh;
   display: flex;
   flex-direction: column;
-  animation: slideUp 0.2s ease;
+  box-shadow: var(--shadow-lg), var(--glow),
+              inset 0 0 0 1px rgba(var(--accent-rgb), 0.12);
+  animation: slideUp 0.25s cubic-bezier(0.25, 0.6, 0.3, 1);
 }
-@keyframes slideUp { from { transform: translateY(30px); opacity: 0; } }
+@keyframes slideUp { from { transform: translateY(30px) scale(0.98); opacity: 0; } }
 
 .modal-header {
   display: flex;
@@ -189,17 +560,20 @@ input:focus, select:focus, textarea:focus {
   transition: all var(--transition);
   border-bottom: 2px solid transparent;
 }
+.modal-tab:hover { color: var(--text); background: var(--bg3); }
 .modal-tab.active {
   color: var(--accent);
   border-bottom-color: var(--accent);
 }
 
-/* Responsive */
+/* ── Responsive ────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .grid-2 { grid-template-columns: 1fr; }
   .grid-3 { grid-template-columns: repeat(2, 1fr); }
   .modal { max-height: 95vh; }
-  .page-title { font-size: 1.4rem; }
+  .page-title { font-size: 1.5rem; }
+  .hero-runic-title { font-size: 2.2rem; }
+  .hero-rune { font-size: 7rem; }
 }
 
 @media (max-width: 480px) {

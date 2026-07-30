@@ -4,12 +4,7 @@ import { useApp } from '../context/AppContext'
 export default function Footer() {
   const { t } = useApp()
   return (
-    <footer style={{
-      background: 'var(--bg2)',
-      borderTop: '1px solid var(--border)',
-      padding: '2rem 0',
-      marginTop: '3rem',
-    }}>
+    <footer className="site-footer">
       <div className="container" style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(180px,1fr))', gap:'1.5rem' }}>
         <div>
           <div style={{ fontSize:'1.1rem', fontWeight:700, color:'var(--accent)', marginBottom:'0.75rem' }}>
@@ -51,7 +46,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="container" style={{ marginTop:'1.5rem', paddingTop:'1rem', borderTop:'1px solid var(--border)', textAlign:'center', fontSize:'0.8rem', color:'var(--text2)' }}>
-        © 2024 Turkiy Korpus — {t('footer_rights')}
+        𐰴 · © {new Date().getFullYear()} Turkiy Korpus — {t('footer_rights')}
       </div>
     </footer>
   )

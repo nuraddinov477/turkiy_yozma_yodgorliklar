@@ -79,7 +79,7 @@ export default function MapView() {
                       <button
                         onClick={() => setSelected(m)}
                         style={{
-                          border:'none', background:'#c9a84c', color:'#1a1a1a',
+                          border:'none', background:'var(--accent)', color:'#ffffff',
                           padding:'0.3rem 0.7rem', borderRadius:'6px', cursor:'pointer',
                           fontSize:'0.8rem', fontWeight:600,
                         }}>

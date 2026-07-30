@@ -3,11 +3,10 @@ from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.http import FileResponse, Http404
+from django.views.generic import RedirectView
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenRefreshView
 from korpus import api as korpus_api
-
-handler404 = 'korpus.views.custom_404'
 
 # ── DRF Router ────────────────────────────────────────────────────────────────
 router = DefaultRouter()
@@ -39,8 +38,8 @@ urlpatterns = [
     # /app/<any-route> — React client-side routing, all return index.html
     re_path(r'^app/(?!assets/).*$', react_index),
 
-    # ── Legacy Django frontend ─────────────────────────────────────────────────
-    path('', include('korpus.urls')),
+    # ── Bosh sahifa: saytga yo'naltirish (lokalda /app/, prodda Vercel) ───────
+    path('', RedirectView.as_view(url=settings.FRONTEND_URL, permanent=False)),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
   + static(settings.MEDIA_URL,  document_root=settings.MEDIA_ROOT) \

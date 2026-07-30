@@ -7,7 +7,7 @@ from django.db.models import Sum
 from django.utils import timezone
 from django.core.mail import send_mail
 from django.conf import settings as django_settings
-from .models import Monument, SiteSettings, MonumentSubmission
+from .models import Monument, SiteSettings, MonumentSubmission, LoginActivity
 
 
 # ── Custom actions ─────────────────────────────────────────────────────────────
@@ -357,6 +357,63 @@ class MonumentSubmissionAdmin(admin.ModelAdmin):
             obj.author_name, obj.author_email,
             obj.author_institution or '—'
         )
+
+
+# ── LoginActivity Admin ────────────────────────────────────────────────────────
+
+@admin.register(LoginActivity)
+class LoginActivityAdmin(admin.ModelAdmin):
+    list_display   = ['who', 'event_badge', 'via_badge', 'ip', 'device', 'timestamp']
+    list_filter    = ['event', 'via', 'timestamp']
+    search_fields  = ['username', 'user__username', 'ip', 'user_agent']
+    date_hierarchy = 'timestamp'
+    ordering       = ['-timestamp']
+    list_per_page  = 30
+
+    # Tarix faqat o'qish uchun — qo'lda yozib/o'zgartirib bo'lmaydi
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    @admin.display(description='Foydalanuvchi', ordering='username')
+    def who(self, obj):
+        name = obj.user.username if obj.user else (obj.username or '—')
+        if obj.user and obj.user.is_superuser:
+            return format_html('{} <span style="color:#d4a944">👑</span>', name)
+        return name
+
+    @admin.display(description='Hodisa', ordering='event')
+    def event_badge(self, obj):
+        cfg = {
+            'login':  ('#3fb950', '🟢 Kirdi'),
+            'logout': ('#8b949e', '⚪ Chiqdi'),
+            'failed': ('#f85149', '🔴 Xato urinish'),
+        }
+        color, label = cfg.get(obj.event, ('#8b949e', obj.event))
+        return format_html(
+            '<span style="background:{}22;color:{};border:1px solid {}44;'
+            'padding:2px 10px;border-radius:100px;font-size:11px;font-weight:700">{}</span>',
+            color, color, color, label
+        )
+
+    @admin.display(description='Qayerdan', ordering='via')
+    def via_badge(self, obj):
+        return '🌐 Sayt' if obj.via == 'api' else '⚙️ Admin panel'
+
+    @admin.display(description='Qurilma')
+    def device(self, obj):
+        ua = obj.user_agent or ''
+        browser = ('Edge' if 'Edg' in ua else 'Opera' if 'OPR' in ua else
+                   'Chrome' if 'Chrome' in ua else 'Firefox' if 'Firefox' in ua else
+                   'Safari' if 'Safari' in ua else '—')
+        os_name = ('Android' if 'Android' in ua else
+                   'iPhone/iPad' if ('iPhone' in ua or 'iPad' in ua) else
+                   'Windows' if 'Windows' in ua else 'macOS' if 'Mac OS' in ua else
+                   'Linux' if 'Linux' in ua else '')
+        icon = '📱' if os_name in ('Android', 'iPhone/iPad') else '💻'
+        return f"{icon} {browser}{' · ' + os_name if os_name else ''}"
 
 
 # ── Admin site customization ───────────────────────────────────────────────────

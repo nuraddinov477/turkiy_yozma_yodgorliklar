@@ -22,7 +22,7 @@ VII–XI asrlardagi turkiy yozma yodgorliklarning elektron korpusi. Orxun, Yenis
 ```bash
 git clone <repo-url>
 cd turkiy-korpus
-./run.sh
+./backend/run.sh
 ```
 
 `run.sh` avtomatik: virtual muhit yaratadi, kutubxonalarni o'rnatadi, migratsiya qiladi,
@@ -31,12 +31,21 @@ boshlang'ich ma'lumotlarni yuklaydi, admin yaratadi va serverni ishga tushiradi.
 Qo'lda:
 
 ```bash
+cd backend
 python3 -m venv ~/venvs/turkiy_korpus
 ~/venvs/turkiy_korpus/bin/pip install -r requirements.txt
 export USE_POSTGRES=False
 ~/venvs/turkiy_korpus/bin/python manage.py migrate
 ~/venvs/turkiy_korpus/bin/python manage.py seed_data
 ~/venvs/turkiy_korpus/bin/python manage.py runserver
+```
+
+React (Vite) dev server alohida:
+
+```bash
+cd frontend
+npm install
+npm run dev   # http://localhost:5173 — /api so'rovlari 127.0.0.1:8000 ga proxy qilinadi
 ```
 
 ### Manzillar
@@ -64,14 +73,17 @@ Muhim: `DJANGO_DEBUG=False`, kuchli `DJANGO_SECRET_KEY`, real `DJANGO_ALLOWED_HO
 ## Tuzilma
 
 ```
-korpus/          — asosiy Django ilova (modellar, API, views, admin)
-turkiy_korpus/   — loyiha sozlamalari
-templates/       — HTML shablonlar
-css/  js/        — statik fayllar
-frontend/        — React (Vite) ilovasi
-media/           — yuklangan fayllar
-manage.py        — Django boshqaruvi
-run.sh           — Ubuntu ishga tushirish skripti
+backend/                — Django (API + klassik sayt)
+  korpus/               — asosiy ilova (modellar, API, views, admin)
+  turkiy_korpus/        — loyiha sozlamalari
+  templates/            — HTML shablonlar
+  css/  js/             — statik fayllar (klassik frontend)
+  media/                — yuklangan fayllar
+  manage.py             — Django boshqaruvi
+  run.sh                — Ubuntu ishga tushirish skripti
+  build.sh              — Render build skripti
+frontend/               — React (Vite) ilovasi
+render.yaml             — Render Blueprint (rootDir: backend)
 ```
 
 ## Litsenziya

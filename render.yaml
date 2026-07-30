@@ -12,6 +12,7 @@ services:
     name: turkiy-korpus-api
     runtime: python
     plan: free
+    rootDir: backend
     buildCommand: "bash build.sh"
     startCommand: "gunicorn turkiy_korpus.wsgi:application --bind 0.0.0.0:$PORT"
     envVars:
@@ -39,3 +40,6 @@ services:
         sync: false
       - key: CSRF_TRUSTED_ORIGINS
         sync: false
+      # API bosh sahifasi (/) saytga yo'naltiradi
+      - key: FRONTEND_URL
+        value: "https://turkiy-yozma-yodgorliklar.vercel.app"

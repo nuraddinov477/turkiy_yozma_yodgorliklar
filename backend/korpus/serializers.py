@@ -15,6 +15,7 @@ class MonumentListSerializer(serializers.ModelSerializer):
             'location', 'script', 'script_display', 'category', 'category_display',
             'language', 'image', 'description', 'word_count', 'line_count',
             'importance', 'views', 'featured', 'status',
+            'researchers', 'bibliography',
             'author_name', 'author_institution', 'is_user_submission',
         ]
 
@@ -29,8 +30,7 @@ class MonumentDetailSerializer(MonumentListSerializer):
     class Meta(MonumentListSerializer.Meta):
         fields = MonumentListSerializer.Meta.fields + [
             'significance', 'full_text', 'transliteration', 'translation',
-            'researchers', 'bibliography', 'tags',
-            'author_email', 'created_at', 'updated_at',
+            'tags', 'author_email', 'created_at', 'updated_at',
         ]
 
 

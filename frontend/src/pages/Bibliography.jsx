@@ -11,7 +11,12 @@ export default function Bibliography() {
   useEffect(() => {
     api.list({ ordering: 'year', page_size: 200 }).then(r => {
       const data = (r.data.results || r.data)
-        .filter(m => m.researchers || m.bibliography)
+        .map(m => ({
+          ...m,
+          researchersText: Array.isArray(m.researchers) ? m.researchers.join(', ') : (m.researchers || ''),
+          bibliographyList: Array.isArray(m.bibliography) ? m.bibliography : (m.bibliography ? [m.bibliography] : []),
+        }))
+        .filter(m => m.researchersText || m.bibliographyList.length)
       setItems(data)
       setLoading(false)
     }).catch(() => setLoading(false))
@@ -20,8 +25,8 @@ export default function Bibliography() {
   const filtered = items.filter(m => {
     const q = search.toLowerCase()
     return !q || m.title.toLowerCase().includes(q) ||
-      (m.researchers || '').toLowerCase().includes(q) ||
-      (m.bibliography || '').toLowerCase().includes(q)
+      m.researchersText.toLowerCase().includes(q) ||
+      m.bibliographyList.join('\n').toLowerCase().includes(q)
   })
 
   return (
@@ -42,15 +47,16 @@ export default function Bibliography() {
                 {m.year < 0 ? `${Math.abs(m.year)} BCE` : m.year}
                 {m.location && ` · ${m.location}`}
               </p>}
-              {m.researchers && (
+              {m.researchersText && (
                 <p style={{ fontSize:'0.9rem', marginBottom:'0.4rem' }}>
-                  <strong>Tadqiqotchilar:</strong> {m.researchers}
+                  <strong>Tadqiqotchilar:</strong> {m.researchersText}
                 </p>
               )}
-              {m.bibliography && (
-                <pre style={{ fontSize:'0.85rem', whiteSpace:'pre-wrap', color:'var(--text2)', lineHeight:1.6 }}>
-                  {m.bibliography}
-                </pre>
+              {m.bibliographyList.length > 0 && (
+                <ul style={{ fontSize:'0.85rem', color:'var(--text2)', lineHeight:1.6,
+                  paddingLeft:'1.2rem', display:'flex', flexDirection:'column', gap:'0.35rem' }}>
+                  {m.bibliographyList.map((b, i) => <li key={i}>{b}</li>)}
+                </ul>
               )}
             </div>
           ))}

@@ -109,12 +109,9 @@ USE_I18N      = True
 USE_TZ        = True
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    ('css', BASE_DIR / 'css'),
-    ('js',  BASE_DIR / 'js'),
-]
-# React build assets — /static/react/assets/ orqali
-_react_assets = BASE_DIR / 'frontend' / 'dist' / 'assets'
+STATICFILES_DIRS = []
+# React build assets — /static/react/assets/ orqali (frontend/ — backend/ ning qo'shnisi)
+_react_assets = BASE_DIR.parent / 'frontend' / 'dist' / 'assets'
 if _react_assets.exists():
     STATICFILES_DIRS.append(('react', _react_assets))
 
@@ -129,7 +126,10 @@ STORAGES = {
 MEDIA_URL  = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-REACT_BUILD_DIR = BASE_DIR / 'frontend' / 'dist'
+REACT_BUILD_DIR = BASE_DIR.parent / 'frontend' / 'dist'
+
+# Bosh sahifa (/) shu manzilga yo'naltiriladi: lokalda /app/, Render'da Vercel sayti
+FRONTEND_URL = os.environ.get('FRONTEND_URL', '/app/')
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 100 * 1024 * 1024
 FILE_UPLOAD_MAX_MEMORY_SIZE = 50  * 1024 * 1024

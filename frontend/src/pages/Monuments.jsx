@@ -4,8 +4,21 @@ import { useApp } from '../context/AppContext'
 import MonumentCard from '../components/MonumentCard'
 import MonumentModal from '../components/MonumentModal'
 
-const SCRIPTS = ['Orxun-Enasoy', 'Uyg\'ur', 'Arab', 'Mug\'al', 'Kiril', 'Boshqa']
-const CATEGORIES = ['Epigrafiya', 'Qo\'lyozma', 'Yozishmalar', 'Shoir asari', 'Diniy matn', 'Huquqiy hujjat']
+// [qiymat (backend kaliti), ko'rinadigan nom]
+const SCRIPTS = [
+  ['koktürk', "Ko'ktürk"],
+  ["uyg'ur", "Uyg'ur"],
+  ['arab', 'Arab'],
+  ['sogd', "So'g'd"],
+  ['boshqa', 'Boshqa'],
+]
+const CATEGORIES = [
+  ['bitiglar', 'Bitik toshlar'],
+  ['qollanmalar', "Qo'llanmalar"],
+  ['diniy', 'Diniy matnlar'],
+  ['adabiy', 'Adabiy asarlar'],
+  ['boshqa', 'Boshqa'],
+]
 
 export default function Monuments() {
   const { t } = useApp()
@@ -66,12 +79,12 @@ export default function Monuments() {
           <select value={filters.script} onChange={e => setFilters(f => ({ ...f, script: e.target.value }))}
             style={{ flex:'0 0 auto' }}>
             <option value="">{t('filter_script')}</option>
-            {SCRIPTS.map(s => <option key={s} value={s}>{s}</option>)}
+            {SCRIPTS.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
           </select>
           <select value={filters.category} onChange={e => setFilters(f => ({ ...f, category: e.target.value }))}
             style={{ flex:'0 0 auto' }}>
             <option value="">{t('filter_category')}</option>
-            {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+            {CATEGORIES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
           </select>
           <select value={filters.ordering} onChange={e => setFilters(f => ({ ...f, ordering: e.target.value }))}
             style={{ flex:'0 0 auto' }}>

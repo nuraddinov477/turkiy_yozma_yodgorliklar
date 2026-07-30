@@ -31,7 +31,7 @@ export default function MonumentModal({ monument, onClose }) {
     { key: 'transliteration', label: t('modal_transliteration') },
     { key: 'translation', label: t('modal_translation') },
     { key: 'info', label: t('modal_info') },
-    ...(data.bibliography ? [{ key: 'bibliography', label: t('modal_bibliography') }] : []),
+    ...(data.bibliography?.length ? [{ key: 'bibliography', label: t('modal_bibliography') }] : []),
     { key: 'cite', label: 'Iqtibos' },
   ]
 
@@ -92,7 +92,7 @@ export default function MonumentModal({ monument, onClose }) {
                   [t('modal_language'), data.language],
                   [t('modal_words'), data.word_count],
                   [t('modal_lines'), data.line_count],
-                  [t('modal_researchers'), data.researchers],
+                  [t('modal_researchers'), Array.isArray(data.researchers) ? data.researchers.join(', ') : data.researchers],
                 ].map(([label, value]) => value ? (
                   <tr key={label} style={{ borderBottom:'1px solid var(--border)' }}>
                     <td style={{ padding:'0.6rem', color:'var(--text2)', width:'40%', fontWeight:500 }}>{label}</td>
@@ -104,9 +104,12 @@ export default function MonumentModal({ monument, onClose }) {
           )}
 
           {!loading && tab === 'bibliography' && (
-            <div style={{ lineHeight:1.8, fontSize:'0.9rem', whiteSpace:'pre-wrap' }}>
-              {data.bibliography}
-            </div>
+            <ul style={{ lineHeight:1.7, fontSize:'0.9rem', paddingLeft:'1.2rem',
+              display:'flex', flexDirection:'column', gap:'0.6rem' }}>
+              {(Array.isArray(data.bibliography) ? data.bibliography : [data.bibliography]).map((b, i) => (
+                <li key={i}>{b}</li>
+              ))}
+            </ul>
           )}
 
           {!loading && tab === 'cite' && (

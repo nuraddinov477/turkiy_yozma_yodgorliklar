@@ -13,11 +13,11 @@ env/
 *.log
 db.sqlite3
 db.sqlite3-journal
-/staticfiles/
+staticfiles/
 
 # Yuklangan media fayllar (papka saqlanadi, ichidagilar emas)
-/media/*
-!/media/.gitkeep
+backend/media/*
+!backend/media/.gitkeep
 
 # ── Maxfiy ma'lumotlar ───────────────────
 .env

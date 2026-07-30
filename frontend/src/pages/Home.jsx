@@ -19,30 +19,28 @@ export default function Home() {
   return (
     <div>
       {/* Hero */}
-      <section style={{
-        background: 'linear-gradient(135deg, var(--bg2) 0%, var(--bg) 100%)',
-        borderBottom: '1px solid var(--border)',
-        padding: '5rem 0 4rem',
-        textAlign: 'center',
-      }}>
-        <div className="container">
-          <div style={{ fontSize:'3rem', marginBottom:'1rem', letterSpacing:'0.1em', color:'var(--accent)' }}>
+      <section className="hero" style={{ padding: '5.5rem 0 4.5rem', textAlign: 'center' }}>
+        <span className="hero-rune" aria-hidden="true" style={{ top:'-2rem', left:'-1.5rem', transform:'rotate(-8deg)' }}>𐰴</span>
+        <span className="hero-rune" aria-hidden="true" style={{ bottom:'-3rem', right:'-1rem', transform:'rotate(10deg)' }}>𐱃</span>
+        <div className="container" style={{ position:'relative' }}>
+          <div className="hero-runic-title fade-up">
             𐰴𐰃𐰔 𐱃𐰇𐰼𐰚
           </div>
-          <h1 style={{ fontSize:'2.5rem', fontWeight:700, marginBottom:'0.5rem' }}>
+          <h1 className="fade-up fade-up-1" style={{ fontSize:'2.7rem', fontWeight:700, marginBottom:'0.5rem', lineHeight:1.2 }}>
             {t('hero_title')}
           </h1>
-          <p style={{ fontSize:'1.3rem', color:'var(--accent)', marginBottom:'1rem' }}>
+          <p className="fade-up fade-up-2" style={{ fontSize:'1.3rem', color:'var(--accent)', fontFamily:'var(--font-display)', fontStyle:'italic' }}>
             {t('hero_subtitle')}
           </p>
-          <p style={{ fontSize:'1rem', color:'var(--text2)', maxWidth:'600px', margin:'0 auto 2rem' }}>
+          <div className="hero-divider fade-up fade-up-2" aria-hidden="true">✦</div>
+          <p className="fade-up fade-up-3" style={{ fontSize:'1.02rem', color:'var(--text2)', maxWidth:'600px', margin:'0 auto 2.2rem' }}>
             {t('hero_desc')}
           </p>
-          <div style={{ display:'flex', gap:'1rem', justifyContent:'center', flexWrap:'wrap' }}>
-            <Link to="/monuments" className="btn btn-primary" style={{ fontSize:'1rem', padding:'0.75rem 2rem' }}>
+          <div className="fade-up fade-up-4" style={{ display:'flex', gap:'1rem', justifyContent:'center', flexWrap:'wrap' }}>
+            <Link to="/monuments" className="btn btn-primary" style={{ fontSize:'1rem', padding:'0.75rem 2.2rem' }}>
               {t('hero_explore')}
             </Link>
-            <Link to="/submit" className="btn btn-outline" style={{ fontSize:'1rem', padding:'0.75rem 2rem' }}>
+            <Link to="/submit" className="btn btn-outline" style={{ fontSize:'1rem', padding:'0.75rem 2.2rem' }}>
               {t('hero_submit')}
             </Link>
           </div>
@@ -59,8 +57,8 @@ export default function Home() {
               { label: t('stats_views'), value: stats.totalViews?.toLocaleString() || 0 },
             ].map(({ label, value }) => (
               <div key={label} style={{ textAlign:'center' }}>
-                <div style={{ fontSize:'2rem', fontWeight:700, color:'var(--accent)' }}>{value}</div>
-                <div style={{ fontSize:'0.85rem', color:'var(--text2)' }}>{label}</div>
+                <div className="stat-number">{value}</div>
+                <div style={{ fontSize:'0.82rem', color:'var(--text2)', letterSpacing:'0.06em', textTransform:'uppercase' }}>{label}</div>
               </div>
             ))}
           </div>
@@ -68,7 +66,7 @@ export default function Home() {
       )}
 
       {/* Quick nav */}
-      <section className="container" style={{ padding:'3rem 1rem' }}>
+      <section className="container" style={{ padding:'4rem 1rem' }}>
         <div className="grid grid-3" style={{ gridTemplateColumns:'repeat(auto-fit,minmax(180px,1fr))' }}>
           {[
             { to:'/timeline', icon:'📅', label:t('nav_timeline') },
@@ -80,13 +78,9 @@ export default function Home() {
           ].map(({ to, icon, label }) => (
             <Link key={to} to={to} className="card" style={{
               display:'flex', flexDirection:'column', alignItems:'center',
-              gap:'0.5rem', textAlign:'center', color:'var(--text)',
-              transition:'transform 0.15s',
-            }}
-              onMouseEnter={e => e.currentTarget.style.transform='translateY(-3px)'}
-              onMouseLeave={e => e.currentTarget.style.transform=''}
-            >
-              <span style={{ fontSize:'1.8rem' }}>{icon}</span>
+              gap:'0.75rem', textAlign:'center', color:'var(--text)',
+            }}>
+              <span className="icon-chip">{icon}</span>
               <span style={{ fontWeight:500, fontSize:'0.9rem' }}>{label}</span>
             </Link>
           ))}

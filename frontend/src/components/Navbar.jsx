@@ -11,17 +11,17 @@ export default function Navbar() {
     { to: '/', label: t('nav_home') },
     { to: '/monuments', label: t('nav_monuments') },
     { to: '/timeline', label: t('nav_timeline') },
-    { to: '/map', label: 'Xarita' },
+    { to: '/map', label: t('nav_map') },
     { to: '/scripts', label: t('nav_scripts') },
     { to: '/stats', label: t('nav_stats') },
     { to: '/concordance', label: t('nav_concordance') },
+    { to: '/recommended-words', label: t('nav_recommended') },
     { to: '/submit', label: t('nav_submit') },
     { to: '/about', label: t('nav_about') },
   ]
 
   return (
-    <nav style={{
-      background: 'var(--bg2)',
+    <nav className="navbar-blur" style={{
       borderBottom: '1px solid var(--border)',
       position: 'sticky',
       top: 0,
@@ -36,13 +36,12 @@ export default function Navbar() {
         <div style={{ display:'flex', gap:'0.25rem', flexWrap:'wrap', flex:1, justifyContent:'center' }}
              className="nav-links-desktop">
           {links.map(l => (
-            <Link key={l.to} to={l.to} style={{
-              padding:'0.4rem 0.65rem',
-              fontSize:'0.82rem',
-              borderRadius:'var(--radius)',
-              color: loc.pathname === l.to ? 'var(--accent)' : 'var(--text2)',
-              background: loc.pathname === l.to ? 'rgba(201,168,76,0.1)' : 'transparent',
-            }}>
+            <Link key={l.to} to={l.to}
+              className={`nav-link${loc.pathname === l.to ? ' active' : ''}`}
+              style={{
+                color: loc.pathname === l.to ? 'var(--accent)' : 'var(--text2)',
+                background: loc.pathname === l.to ? 'rgba(var(--accent-rgb),0.1)' : 'transparent',
+              }}>
               {l.label}
             </Link>
           ))}

@@ -157,6 +157,39 @@ class MonumentSubmission(models.Model):
         return f"{self.title} — {self.author_name} ({self.get_status_display()})"
 
 
+class LoginActivity(models.Model):
+    EVENT_CHOICES = [
+        ('login',  'Kirdi'),
+        ('logout', 'Chiqdi'),
+        ('failed', 'Muvaffaqiyatsiz urinish'),
+    ]
+    VIA_CHOICES = [
+        ('admin', 'Admin panel'),
+        ('api',   'Sayt (API)'),
+    ]
+
+    user = models.ForeignKey(
+        'auth.User', null=True, blank=True, on_delete=models.SET_NULL,
+        related_name='login_activities', verbose_name="Foydalanuvchi",
+    )
+    # Muvaffaqiyatsiz urinishlarda user bo'lmaydi — kiritilgan login shu yerda qoladi
+    username = models.CharField("Kiritilgan login", max_length=150, blank=True)
+    event = models.CharField("Hodisa", max_length=10, choices=EVENT_CHOICES)
+    via = models.CharField("Qayerdan", max_length=10, choices=VIA_CHOICES, default='admin')
+    ip = models.GenericIPAddressField("IP manzil", null=True, blank=True)
+    user_agent = models.CharField("Qurilma (User-Agent)", max_length=300, blank=True)
+    timestamp = models.DateTimeField("Vaqt", auto_now_add=True, db_index=True)
+
+    class Meta:
+        verbose_name = "Kirish tarixi"
+        verbose_name_plural = "Kirish tarixi"
+        ordering = ['-timestamp']
+
+    def __str__(self):
+        who = self.user.username if self.user else (self.username or 'noma`lum')
+        return f"{who} — {self.get_event_display()} ({self.timestamp:%d.%m.%Y %H:%M})"
+
+
 class SiteSettings(models.Model):
     site_title = models.CharField(max_length=255, default="Turkiy Yozma Yodgorliklar Korpusi")
     site_subtitle = models.CharField(max_length=500, default="VII–XI asrlardagi turkiy yozma merosning elektron to'plami")

@@ -64,7 +64,7 @@ export default function Concordance() {
                   </div>
                   <div style={{ fontFamily:'monospace', lineHeight:1.6 }}>
                     <span style={{ color:'var(--text2)' }}>…{r.left}</span>
-                    <mark style={{ background:'rgba(201,168,76,0.3)', color:'var(--accent)', padding:'0 2px', borderRadius:'2px' }}>
+                    <mark style={{ background:'rgba(var(--accent-rgb),0.25)', color:'var(--accent)', padding:'0 2px', borderRadius:'2px' }}>
                       {r.match}
                     </mark>
                     <span style={{ color:'var(--text2)' }}>{r.right}…</span>

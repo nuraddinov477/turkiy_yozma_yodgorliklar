@@ -4,7 +4,7 @@ import { getLang, setLang as setI18nLang, t } from '../i18n'
 const AppContext = createContext(null)
 
 export function AppProvider({ children }) {
-  const [theme, setThemeState] = useState(() => localStorage.getItem('theme') || 'dark')
+  const [theme, setThemeState] = useState(() => localStorage.getItem('theme') || 'light')
   const [lang, setLangState] = useState(getLang)
   const [user, setUser] = useState(() => {
     const u = localStorage.getItem('username')
