@@ -27,7 +27,7 @@ export default function Navbar() {
       top: 0,
       zIndex: 100,
     }}>
-      <div className="container" style={{ display:'flex', alignItems:'center', justifyContent:'space-between', height:'56px' }}>
+      <div className="container" style={{ display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', minHeight:'56px', padding:'0.6rem 1rem', rowGap:'0.4rem' }}>
         <Link to="/" style={{ fontWeight:700, fontSize:'1rem', color:'var(--accent)', letterSpacing:'0.02em' }}>
           𐰴 Turkiy Korpus
         </Link>
