@@ -2,6 +2,9 @@
 # so'zlarning zamonaviy turkcha (Türkiye türkçesi) muqobili/izohi.
 # Manba: standart turkologiya (Tekin, Clauson, Erdal) — Orxun-Yenisey bitiktoshlari,
 # Irq Bitig, Xuastuanift va Oltin Yorug' matnlaridagi so'zlar.
+# 27 ta so'z qo'shimcha ravishda bitig.kz ("Türik Bitig" — Qozog'iston Til qo'mitasi
+# bazasi, Wayback Machine arxivi orqali, sayt joriy holatda 503 bilan javob beryapti)
+# dagi qadimgi turkiy-qozoqcha lug'ati bilan tasdiqlandi/aniqlandi.
 WORD_TR = {
     'qaγan': 'kağan (hükümdar)',
     'bilgä': 'bilge (akıllı, bilgili)',
@@ -32,7 +35,7 @@ WORD_TR = {
     'özüm': 'kendim',
     'tabγač': 'Tabgaç (Çin, Çinliler)',
     'eliŋä': 'eline, ülkene',
-    'qïlïntïm': 'yaratıldım, var oldum',
+    'qïlïntïm': 'hizmet ettim (bitig.kz: "qızmet ettim")',
     'bodun': 'budun, halk',
     'tabγačqa': "Çin'e, Tabgaç'a",
     'körür': 'görür',
@@ -95,7 +98,7 @@ WORD_TR = {
     'qïrqïz': 'Kırgız',
     'boyla': 'boyla (idari-askeri unvan)',
     'qutluγ': 'kutlu (devlet kutuna sahip)',
-    'yarγan': 'yarasa (Eski Türkçede hayvan adı)',
+    'yarγan': 'unvan/kişi adının parçası (bitig.kz: "Apa Yarğan Tarkan")',
     'tän': 'ten, vücut',
     'yarïn': 'yarın',
     'kečä': 'gece',
